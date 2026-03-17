@@ -1,0 +1,31 @@
+---
+description: Portfolio-level governance for the Xanthos feedback engine. Defines the strategic urgency schema and cross-project feedback authority. (Level 3: Portfolio)
+globs: ["T1-vrvish-xanthos-feedback/**/*", "**/feedback/**"]
+alwaysApply: false
+---
+
+# 💬 Xanthos Portfolio Feedback (L3)
+
+**Xanthos** is the strategic listening post of the vrvish ecosystem. It sits at Level 3 because its data influences the long-term roadmap and portfolio prioritisation.
+
+## 1. The Strategic Authority
+All feedback from all apps must flow into:
+`C:\GitHub\T1-vrvish-xanthos-feedback`
+
+**Mandate:** No project or platform is permitted to operate outside of this portfolio-level feedback loop.
+
+## 2. Portfolio Urgency Classification
+To allow the Commanders to triage the entire portfolio's needs, users must categorize feedback using these specific strategic labels:
+
+- **`[Required Immediately]`**: Immediate threat to project success or data integrity.
+- **`[Required Soon]`**: High priority for the current milestone.
+- **`[No Rush]`**: General refinement or non-blocking issues.
+- **`[Suggestion]`**: Portfolio growth ideas or feature enhancements.
+- **`[Future Upgrade]`**: Long-term R&D or major platform pivots.
+
+## 3. The "PigeonHole" Handover
+Feedback marked `[Required Immediately]` or `[Required Soon]` must be automatically summarized and placed in the relevant agent in charges **PigeonHole** and the human in charge's email (as defined in the Level 3 Persona Matrix) for strategic review.
+
+
+
+**Latest Update:** 2026-03-15

@@ -1,0 +1,22 @@
+---
+description: Functional commercial and audience states for Level 5 (Project) entities.
+globs: ["**/projects/**", "**/L5-**/*", "**/PLAN.md"]
+alwaysApply: false
+---
+
+# 💰 Project Commercial Status
+
+Projects at Level 5 are governed by their funding source and intended audience.
+
+## 1. Commercial Status
+- **Billable**: Directly linked to a client-funded Task Order (Level 6). Requires an AFP (Application for Payment) track.
+- **Non-Billable**: Internal R&D, infrastructure maintenance, or core swarm evolution.
+
+## 2. Audience Context
+- **Client**: The primary stakeholder is an external Level 2 entity.
+- **Internal**: The primary stakeholder is vrvish (Internal tools or platforms).
+
+## 3. Operational Rule
+A Project marked as `Billable` MUST have an associated `AppID` (Level 6) for financial tracking in the Data Matrix (Pillar 3).
+
+**Latest Update:** 2026-03-15

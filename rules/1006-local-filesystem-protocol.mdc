@@ -1,0 +1,24 @@
+---
+description: Mandatory use of the Python FileSystem abstraction engine for all local disk operations.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 03. Local Filesystem Protocol
+
+If an agent lacks native Antigravity-level physical tool-calling to manipulate the local file system (read/write/move), or is operating within the vrvish Swarm context, they MUST rely on the python abstraction engine.
+
+## 1. The Core Engine
+- **Engine Path:** `C:\GitHub\T1-vrvish-core\scripts\T0-Core\engines\Engine_FileSystem.py`
+
+## 2. Operational Mandate
+1. **Abstraction over Native**: Even if native file-system tools are available, the Python Engine is preferred for complex operations (moving entire Work Packages, archiving, or batch renaming) to ensure audit logs are generated.
+2. **Audit Trail**: All file manipulations performed via this engine are tracked. Agents must provide the necessary metadata (Work Package ID, User Intent) when calling the engine.
+3. **Safety First**: The engine contains the guardrails to prevent accidental deletion of core infrastructure directories (`T0-Core`, `infrastructure`, etc.). Agents must not attempt to bypass these guardrails with raw shell commands.
+
+## 3. Usage Context
+- Use this engine for creating the **6-Folder Paradigm** structure.
+- Use this engine for **Archiving** completed Work Packages.
+- Use this engine when moving deliverables from `4-tasks/final/` to `5-deliverables/`.
+
+**Latest Update**: 2026-03-15

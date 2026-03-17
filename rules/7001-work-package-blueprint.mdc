@@ -1,0 +1,88 @@
+---
+description: The 6-Folder Paradigm for Work Package (WP) execution. Defines lifecycle, directory structure, metadata, archiving, and automation.
+globs: ["theHive/workPackages/**", "PLAN.md", "work-packages/**", "**/objective.md"]
+alwaysApply: false
+---
+
+# Work Package Blueprint (The 6-Folder Paradigm)
+
+## 1. Required WP Frontmatter/Metadata
+Every Work Package MUST contain the following YAML frontmatter. This binds the task to the T1/T2/T3 Ecosystem Taxonomy and preserves routing history.
+
+---
+id: WP-XXX
+title: "A human-readable label for ease of reading, e.g., AI Road Design Scaffold"
+status: Pending | In Progress | QA | Complete
+owner: Agent X (Strategic Advisor)
+assigned_to: Team Web | Agent R
+priority: High | Medium | Low
+domain: MicrosoftApps | Core Infra
+ProgrammeID: PROG-XXX  # The strategic T1 platform (e.g., "vrvish | place")
+ProjectID: PROJ-XXX    # The specific T2 project (e.g., "design")
+AppID: APP-XXX         # The T3 application container (e.g., "vrvish-place-design")
+LegacyPath_Hint: "C:\GitHub\place\design\vrvish-place-design\" # ONLY a hint
+created: YYYY-MM-DD
+---
+
+## 2. Directory Structure
+
+All new work packages must follow this strict 6-folder lifecycle. They sit inside C:\GitHub\T1-vrvish-core\theHive\workPackages\active\WP-[ID]-[Name]\.
+
+├── 1-instruction/   
+├── 2-planning/              
+├── 3-package/          
+├── 4-tasks/                 
+├── 5-deliverables/          
+└── 6-explanations/          
+
+## 3. Folder Definitions
+
+### 1-instruction/
+Purpose: The trigger.
+- Contains the raw, unedited instruction, email, chat export, or a_Commander_Direction.md file that initiated the work package.
+- Rule: Never edit these files. They are the immutable origin state.
+
+### 2-planning/
+Purpose: The sandbox. 
+- Contains research notes, feasibility studies, database schema proposals, and discussion logs between agents and Commanders.
+- Rule: Code placed here is non-binding. It is important that planning is recorded so that work can be repeated or improved.
+
+### 3-package/
+Purpose: The contract.
+- Contains the final, accepted objective.md and requirements.md. 
+- Once Agent G approves this folder, the WP is formally "In Progress".
+- Rule: Changes to scope must be documented as amendments here.
+
+### 4-tasks/
+Purpose: The execution floor.
+- Broken down into manageable chunks (e.g., Task-01-Build-API/).
+- Each task folder MUST contain:
+  - working/: Active code drafting or scratchpads.
+  - peerReview/: Handovers for other agents.
+  - qa/: Test outputs or UI verification checklists.
+  - final/: The accepted code chunk or documentation.
+
+### 5-deliverables/
+Purpose: The output.
+- Contains final research reports, compiled binaries, config files, or executive summaries. 
+- Rule: Artifacts move here ONLY after Agent G signs off on the qa/ folder steps.
+
+### 6-explanations/
+Purpose: The swarm memory (Post-Mortem).
+- Explains HOW the objective was achieved and blockers encountered.
+- Rule: This becomes core training data for the swarm.
+
+## 4. Archiving
+When a Work Package is completed, the entire 6-folder structure is moved verbatim from active/ to C:\GitHub\T1-vrvish-core\theHive\workPackages\archived\. No internal structures are flattened or deleted. 
+
+## 5. Queue Automation
+Work Package data manipulation must strictly use:
+- \Engine_WorkPackages.js\ for CRUD operations.
+- \Engine_Audit_WorkPackages.py\ for compiling status audits.
+
+Latest Update: 2026-03-10
+
+## 4. Operational Mandate
+1. **Verification**: Agents must verify an object's state before modification.
+2. **Logic Check**: An agent cannot move a Work Package to `Deployment` if the `Definition` phase artifacts (e.g., `objective.md`) are missing.
+3. **Audit**: All state transitions must be logged to the Data Matrix for velocity calculation.

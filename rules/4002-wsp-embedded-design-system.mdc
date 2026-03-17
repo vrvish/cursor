@@ -1,0 +1,97 @@
+---
+description: UI/UX Guidelines and Design System for the T1-WSP-Embedded portfolio. Defines WSP branding, Tailwind patterns, and component standards.
+globs: ["T1-WSP-Embedded/**/*", "packages/brand-wsp/**"]
+alwaysApply: false
+---
+
+# UI/UX Guidelines & Design System (T1-WSP-Embedded)
+
+> **Philosophy:** "Tactics, not Talent."  
+> We prioritize **Stability**, **Readability**, and the **Rule of Least Power**. Our tools should feel "clean, linear, and professional"—high fidelity through strict adherence to fundamentals, not flashy custom CSS.
+
+---
+
+## 1. Core Design Principles (WSP Identity)
+
+### A. The "WSP" Aesthetic (Premium & Linear)
+- **Black & White Foundation:** The UI should be predominantly Black (Navigation, Primary Actions) and White (Content, Cards).
+- **Red Accents:** Use WSP Red (#ff372f, see packages/brand-wsp/colors.json) sparingly for active states, highlights, or critical alerts. Never use it for large backgrounds.
+- **Data Density:** Enterprise tools need to be dense but legible. Use 13px-14px styling.
+
+> Note: All application colours (React, Python, etc.) MUST be sourced from the centralised palette: packages/brand-wsp/colors.json.
+
+## 2. Technical Implementation (Tailwind CSS)
+
+### A. Layouts & Navigation
+Requirement: Navigation bars must be Black with White text.
+
+The "Shell" Pattern:
+// Common layout for all internal tools
+<div className="min-h-screen bg-gray-50 flex flex-col">
+  {/* WSP Global Header */}
+  <header className="bg-black text-white h-16 flex items-center px-6 shadow-md">
+    <div className="font-bold text-xl tracking-tight">WSP <span className="text-[#ff372f]">Collisions</span></div>
+    {/* Navigation Links: White text, subtle hover */}
+    <nav className="ml-auto space-x-6 text-sm font-medium">
+      <a href="#" className="hover:text-gray-300 transition-colors">Dashboard</a>
+      <a href="#" className="hover:text-gray-300 transition-colors">Settings</a>
+    </nav>
+  </header>
+  <main className="flex-1 p-8 max-w-7xl w-full mx-auto">
+    {/* Content */}
+  </main>
+</div>
+
+### B. Cards & Containers
+- Preferred: bg-white border border-gray-200 rounded-none (Sharp corners feel more "Engineering/Technical").
+- Shadows: detailed but subtle. shadow-sm.
+
+### C. Typography
+- Primary Corporate Font: PP Neue Montreal
+- Fallback Font: Arial
+- Headings (Medium): Use uppercase for impact headings (5 words or less). font-sans font-medium text-black.
+- Subheads (Bold): Highlight key text with sentence case. font-sans font-bold text-black.
+- Body (Regular): Sentence case for all general text. font-sans font-normal text-gray-700.
+
+### D. Actions & Buttons
+- Primary: bg-black text-white hover:bg-gray-800 transition-colors (Standard WSP Primary).
+- Secondary: bg-white border border-gray-300 text-black hover:bg-gray-50.
+- Accent/Alert: bg-[#ff372f] text-white hover:bg-red-700.
+
+### E. Assets & Logos
+All official WSP logos are stored in packages/brand-wsp/assets.
+- WSP Red Logo: packages/brand-wsp/assets/WSP Red Logo.png (Primary use on White backgrounds)
+- WSP White Logo: packages/brand-wsp/assets/WSP White Logo.png (Use on Black/Dark backgrounds)
+- WSP Black Logo: packages/brand-wsp/assets/WSP Black Logo.png (Use only for monochrome print/reports)
+
+Usage Rule:
+- Navigation Bar: Always use the White Logo or White Text.
+- Reports/Docs: Use the Red Logo on white paper.
+
+---
+
+## 3. Component Standards (The "Rule of Least Power")
+
+### A. Data Tables
+- Headers: text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50
+- Rows: border-b border-gray-100 hover:bg-gray-50 transition-colors
+- Alignment: Numbers right-aligned, Text left-aligned.
+
+### B. Forms
+- Labels: block text-sm font-medium text-gray-700 mb-1
+- Inputs: block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm
+- Validation: Inline error messages in text-red-600 text-sm.
+
+## 4. Accessibility (A11y)
+- Focus Rings: Never remove outline-none without replacing it with a custom ring.
+- Semantic HTML: Use <button>, not <div onClick>.
+
+## 5. "Agent X" Review Checklist
+Verify before completion:
+- [ ] Roughly aligned elements use the same spacing scale (e.g., gap-4).
+- [ ] No arbitrary pixel values (e.g., width: 357px).
+- [ ] Primary action is distinct from secondary actions.
+- [ ] Empty states are handled.
+- [ ] No horizontal scrolling on standard 1080p monitors.
+
+Latest Update: 2026-03-15

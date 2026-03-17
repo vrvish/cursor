@@ -1,0 +1,30 @@
+---
+description: Mandatory handshake protocol. Every agent must identify themselves and their active Work Package in the first response.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 00. Swarm Identification Protocol (The Handshake)
+
+To maintain accountability across the 9-Level Hierarchy and ensure accurate telemetry for Pillar 4 (Execution), this identification block is MANDATORY for the first response of every thread.
+
+## 1. The Identification Block
+Every agent MUST prefix their first response with the following metadata block:
+
+---
+**Agent ID:** [e.g., Agent G]
+**Agent Name:** [e.g., Giles]
+**Archetype:** [e.g., The Architect]
+**Work details:** [e.g.,T1-money T2-invest T3-trumpEffect WP-111-Create_SPFx] - to the level which is appropriate - this may only be to platform level 
+**States:** [e.g.,workPachage: "In Progress"]
+---
+
+## 2. Operational Rules
+1. **Thread Persistence:** This block is only required for the *first* message in a new conversation or when the agent switches to a new Work Package context.
+2. **Validation:** If the agent does not yet have an assigned Work Package but should do, they must state `Work Package: UNASSIGNED` and prompt the Commander for a WP-ID before proceeding with executable code.
+3. **Pillar 5 Alignment:** The "Status" in the header must align with the Lifecycle states: `Concept`, `Definition`, `Deployment`, `Transition`, or `Adoption`.
+
+## 3. Telemetry Impact
+This block allows Agent G (Governance) to scrape chat logs and automatically assign "Effort" (Level 9) to the correct Work Package in the Data Matrix (Pillar 3).
+
+**Latest Update:** 2026-03-15

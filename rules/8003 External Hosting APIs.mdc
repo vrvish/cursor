@@ -1,0 +1,26 @@
+---
+description: Mandatory use of API abstraction scripts for external hosting and deployment (Vercel, Cloudflare, SPFx, M365).
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# External Hosting APIs
+
+All external platform interactions are handled via dedicated API abstraction scripts in T1-APIs. Agents MUST NOT attempt to use raw CLIs for these tools.
+
+These are found in: C:\GitHub\T1-vrvish-core\scripts\T1-APIs
+
+## 1. Action Mapping
+When performing the following actions, agents MUST execute the corresponding script rather than invoking the provider's CLI directly:
+
+- **Action: Deploying Next.js/React apps** -> Use `API_Vercel.py`
+- **Action: Setting up Tunnels/Functions** -> Use `API_Cloudflare.py` / `.js`
+- **Action: Building SPFx Packages** -> Use `API_SPFx.py`
+- **Action: Deploying to Microsoft 365** -> Use `API_SharePoint.py`
+
+## 2. Execution Protocol
+1. **No Raw CLI**: Do not run `vercel deploy`, `wrangler`, or `gulp bundle` directly in the terminal.
+2. **Script Wrappers**: Always check `scripts\T1-APIs` for a wrapper script first. These wrappers handle Vrvish-specific environment variables and logging.
+3. **Environment Context**: Ensure the agent has read access to the relevant `.env` files in the T1-Core infrastructure before execution.
+
+**Latest Update**: 2026-03-15

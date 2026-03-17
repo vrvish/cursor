@@ -1,0 +1,21 @@
+---
+description: States for the vrvish management model.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🌀 Universal Lifecycle Status (APM Aligned)
+
+Every object within the 9-level hierarchy must adhere to these functional states to track progress through time.
+
+## 1. The 5-Stage Lifecycle
+- **Concept**: Discovery and feasibility. The "Is this possible?" phase.
+- **Definition**: Planning and resource baseline. The "How will we do it?" phase.
+- **Deployment**: Active execution. The "Doing" phase where L8 Actions occur.
+- **Transition**: Peer review and intelligence extraction. The "Did we learn?" phase.
+- **Adoption**: Final delivery and archival. The "Client is using it" phase.
+
+## 2. Gate Requirement
+An object cannot transition from **Definition** to **Deployment** without a signed-off `objective.md` in the Pillar 2 Vault.
+
+**Latest Update:** 2026-03-15

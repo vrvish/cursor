@@ -1,0 +1,43 @@
+---
+description: The master definition of the Vrvish 5-Pillar Ecosystem. Defines the physical and logical boundaries of the environment.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🏗️ The Vrvish 5-Pillar Ecosystem
+
+All Swarm operations must respect the boundaries of the five fundamental pillars. This is the master map for all vrvish infrastructure.
+
+## Pillar 1: The States (Lifecycle)
+- **System:** Data in all our system are managed through their states.  For example: lifecycle, commercial, and client states.
+- **Function:** Defines the "Gate" status, approval stats, and other information within items in the other pillars (Work packages in git/documents, sql data tables with state child tables, the management model).
+- **Defined in:** 1001-vrvish-state-management.mdc
+
+## Pillar 2: The vrvish management model (Hierarchy)
+- **System:** The 9-Level vrvish management model (see 1002-vrvish management model.mdc).
+- **Function:** Defines the strategic and tactical layers from Organisation down to Atomic Effort.
+- **Defined in:** 1002-vrvish management model.mdc
+
+## Pillar 3: The code engine (Logic)
+- **Primary Host:** GitHub (https://github.com/vrvish) (See 003-working-with-git.mdc)
+- **Local Path:** `C:\GitHub\`
+- **Content:** Executable code, logic, build scripts, and developer documentation.
+- **Defined in:** 8002-source-control-api-protocol.mdc
+
+
+## Pillar 4: The data matrix (Persistence)
+- **Primary Host:** SQL Databases
+- **High-Velocity Host:** **Google Firebase / Firestore**.
+- **Content:** SQL handles relational truth, telemetry, and live billing. Firebase handles real-time streams (chat, GPS) and unstructured JSON logs.
+
+
+## Pillar 5: The document vault (Assets)
+- **File Storage (Human-Readable):** Google Drive and Microsoft SharePoint.
+  - **Local Path:** `C:\vrvish\` (Cloud-synced).
+  - **Content:** Raw binary files (PDFs, .docx, .xlsx, .png). These are for human consumption and archival.
+- **Data Intelligence (AI-Readable):** Google BigQuery / Vector DB.
+  - **Process:** Extraction and transformation.
+  - **Content:** This is NOT a file host. It stores the *textual extracts*, OCR results, and semantic vectors derived from the files in the storage layer. 
+  - **Function:** Enables the Swarm to perform sub-second SQL analysis and semantic AI search across the "knowledge" of the vault without opening individual files.
+
+**Latest Update:** 2026-03-15

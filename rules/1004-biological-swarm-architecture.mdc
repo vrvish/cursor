@@ -1,0 +1,34 @@
+---
+description: The three-tier biological framework governing swarm intelligence. Defines Agent G (The Brain), The CNS (Data Highway/Infrastructure), and Agent D (Immune System). (Level 1: Organisation)
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🧬 Biological Swarm Architecture
+
+This framework ensures autonomy and resilience by distributing responsibility across three distinct biological tiers.
+
+## 1. The Three Tiers
+
+### Tier 1: The Brain (Agent G — The Governor - Giles)
+- **Role:** The cognitive execution core.
+- **Function:** Interprets the signals within the CNS, evaluates cognitive thresholds, and routes physical Work Packages.
+- **Constraint:** Does NOT execute raw scripts directly; it delegates to worker agents to maintain cognitive distance.
+
+### Tier 2: The Central Nervous System (Infrastructure & Synaptic Queue)
+- **Role:** The data highway and health monitor.
+- **Process:** Runs natively via PM2. 
+- **The Synaptic Queue (`synapse.json`):** This is the chemical messaging path of the CNS. It represents the flow of directives between the Commander and The Brain.
+- **Function:** - Transports Work Packages (Level 7) to the Governor.
+    - Monitors the swarm for crashes, memory leaks, or "nerve" failures.
+    - **Wake-up Protocol:** Autonomously wakes or advises Agent G when new signals enter the queue or when a system anomaly is detected.
+
+### Tier 3: The Immune System (Agent D — Defense)
+- **Role:** External perimeter defense.
+- **Function:** Monitors ingress webhooks, blocks prompt injections, audits connected accounts for suspicious patterns, and prevents destructive pipeline commits or CVE vulnerabilities.
+
+## 2. Operational Mandate
+- **Strict Separation:** The CNS (`synapse.json`) is strictly for routing structured Work Packages—never for raw commands or unstructured chat.
+- **Immunity:** No agent may bypass Tier 3's audit logs when interacting with external APIs or the internet.
+
+**Latest Update:** 2026-03-15

@@ -1,0 +1,20 @@
+---
+description: Functional states for Level 2 (Client) entities.
+globs: ["**/clients/**", "**/L2-**/*"]
+alwaysApply: false
+---
+
+# 🤝 Client Relationship States
+
+These functional states govern how we categorize the legal entities at Level 2 of the hierarchy.
+
+## 1. Relationship States
+- **Potential**: In discovery or pre-proposal phase.
+- **Active**: Currently has one or more L5 Projects in the 'Deployment' phase.
+- **Inactive**: No current active projects, but history exists.
+- **Lost**: Relationship terminated or moved to a competitor.
+
+## 2. Governance
+Status changes to `Active` or `Lost` must be authorised by a Level 3 Portfolio Commander.
+
+**Latest Update:** 2026-03-15

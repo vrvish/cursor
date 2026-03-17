@@ -1,0 +1,45 @@
+---
+description: The physical mapping of the Vrvish 9-Level Model to the C:\GitHub\ filesystem. Essential for agent orientation and pathing.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🏠 1012: Swarm Habitat Map
+
+This map defines the physical directory structure of the Vrvish Swarm. All agents must use this map to navigate the hierarchy and locate assets, logic, or work packages.
+
+## 🗺️ The Vertical Hierarchy (Filesystem Mapping)
+
+| Level | Vrvish Tier | Directory Prefix | Example Path |
+| :--- | :--- | :--- | :--- |
+| **L1** | **Organisation** | `T1-vrvish-*` | `C:\GitHub\T1-vrvish-core\` |
+| **L4** | **Platform** | `T4-*` | `C:\GitHub\T4-gamble\` |
+| **L5** | **Project** | `T5-*` | `C:\GitHub\T4-gamble\T5-casino\` |
+| **L6** | **App / Task Order**| `T6-*` | `C:\GitHub\T4-gamble\T5-casino\T6-poker-engine\` |
+| **L7** | **Work Package** | `APP-*` | `...\T6-poker-engine\workPackages\active\APP-001\` |
+
+## 📍 Key Habitat Zones
+
+### 1. The Core (Level 1)
+- **Primary Location:** `C:\GitHub\T1-vrvish-core\`
+- **Purpose:** Contains the "Kernel" (Global Rules, Synaptic logic, and Swarm Utilities).
+- **Collective Memory:** Found in `T1-vrvish-core\collectiveMemory\knowledgeBank\`.
+
+### 2. Standard folder structure (every level)
+At **every** level (T1, T4, T5, T6), the standard structure includes:
+- **`largeAssets/`** — Files too big for Git (.pbix, large CSVs, datasets). Do not commit these to GitHub. The overflow mirror at `C:\vrvish\gitOverflow` follows the same tier names (T1-*, T4-*, T5-*, T6-*) and **every folder there must have a `largeAssets/` subfolder**. See `C:\vrvish\gitOverflow\README.md`. The engine that creates new platforms, projects, or apps MUST create the matching path and `largeAssets` in gitOverflow.
+
+### 3. The Production Line (Level 6)
+Every `T6-` App folder is a self-contained production environment. Full mandatory structure is defined in **[6001-app-initialisation-blueprint](mdc:6001-app-initialisation-blueprint.mdc)** (includes `src/`, `assets/`, `tests/`, `Notes/`, `workPackages/`, `largeAssets/`, `synapse.json`).
+- **`/src`**: Production-ready code.
+- **`/Notes`**: Tactical memory and session handovers.
+- **`/workPackages`**: The staging area for all new effort.
+- **`/largeAssets`**: Overflow binaries; canonical location for same tier is `C:\vrvish\gitOverflow\<T4>\<T5>\<T6>\largeAssets\`.
+
+### 4. The Human Matrix (Level 3)
+- **Location:** `C:\GitHub\T1-vrvish-core\humans\`
+- **Purpose:** Context for **[3002: Commander Persona Matrix](mdc:3002-commander-persona-matrix.mdc)** (Jon, Fen, Henry).
+
+## 🚦 Navigation Protocols
+1. **Context Awareness:** Upon "Waking Up," an agent must verify their current path against this map to determine if they are in a **Platform (L4)**, **Project (L5)**, or **App (L6)**.
+2. **Promotion Rule:** No logic moves into a `T6-*/src/` folder without passing

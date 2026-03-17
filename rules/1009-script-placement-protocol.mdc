@@ -1,0 +1,37 @@
+---
+description: Mandatory directory structure for script placement. Governs the boundary between Core logic and External APIs.
+globs: ["scripts/**/*", "T1-vrvish-core/scripts/**/*"]
+alwaysApply: false
+---
+
+# 15. Script Placement Protocol
+
+Every script must follow the strict Core vs API boundary to maintain ecosystem integrity and security.
+
+## 1. T0-Core (Internal Logic & Infrastructure)
+- **Mandate:** If a script modifies internal logic, databases, or vrvish code, it MUST live in: `T1-vrvish-core\scripts\T0-Core\`
+- **Categorization:** All T0 scripts must be placed in their functional sub-folder:
+    - `/daemons/`: Persistent background processes.
+    - `/engines/`: Core logic processors (FileSystem, Audit, etc.).
+    - `/runners/`: Task execution triggers.
+    - `/tests/`: Validation and QA scripts.
+    - `/utilities/`: Core-level helper functions.
+
+## 2. T1-APIs (External Connectivity)
+- **Mandate:** If a script networks with external credentials via the internet (Vercel, Microsoft, Cloudflare, etc.), it MUST:
+    1. Be named with the prefix `API_` (e.g., `API_Vercel.py`).
+    2. Live in: `T1-vrvish-core\scripts\T1-APIs\`
+
+## 3. T2-Tools (Human-Centric)
+- **Mandate:** Specific tools designed for direct interaction by human users live in: `T1-vrvish-core\scripts\T2-tools\`
+
+## 4. T3-Utilities (Transient Helpers)
+- **Mandate:** One-off utility helper functions or minor automation tasks live in: `T1-vrvish-core\scripts\T3-utilities\`
+
+## 5. Compliance Check
+Before creating a script, agents must:
+- Verify the script doesn't already exist in the target directory.
+- Ensure the script is placed according to its functional tier (T0, T1, T2, or T3).
+- Use absolute path references when calling these scripts from other modules.
+
+**Latest Update:** 2026-03-15

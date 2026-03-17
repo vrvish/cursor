@@ -1,0 +1,44 @@
+---
+description: The Master Blueprint for App/Project creation. Defines folder structure, promotion logic, and the requirement for an App Master .mdc.
+globs: ["T3-*/**"]
+alwaysApply: true
+---
+
+
+# 🚀 App Initialisation & Structure
+
+Every App (T3) within the Vrvish ecosystem must follow a unified structural baseline. This ensures any Swarm agent can orient itself within the specific logic of an application across different project silos.
+
+## 1. The App Master Rule
+If a new application folder is created (e.g., `T3-designWeb`), the agent must generate a dedicated `5xxx-[app-name].mdc` rule. This rule serves as the "DNA" for that specific app and must define:
+- **Primary Tech Stack:** (e.g., Python FastAPI, React, or SharePoint SPFx).
+- **Data Boundaries:** Which SQL shards or Firebase collections this app owns.
+- **Agent G Protocol:** Explicitly state that code moves from `workPackages` to `src` only after Agent G (The Brain) approves the QA state.
+
+## 2. Mandatory App Folder Structure
+Apps live within Project/Portfolio directories, following the T4/T5/T6 habitat pattern. The internal structure must be:
+
+📂 [App-Name] (e.g., C:\GitHub\T4-place\T5-design\T6-designWeb\)
+├── 📂 src/                 # THE CODE ENGINE: Final, QA-approved executable logic.
+├── 📂 assets/              # CONFIRMED ASSETS: Production-ready images, icons, and themes.
+├── 📂 largeAssets/         # Overflow: .pbix, large CSVs, datasets — do not commit. Canonical path: C:\vrvish\gitOverflow\<T4>\<T5>\<T6>\largeAssets\ (per 1012).
+├── 📂 tests/               # Unit and Integration tests.
+├── 📂 Notes/               # THE DIARY: Session Handover & Learning (Per 1016).
+├── 📂 workPackages/        # THE STAGING AREA: Tactical execution (Per 7001).
+│   ├── 📂 active/          # Current WIP. Agent G monitors this for "Promotion".
+│   └── 📂 archive/         # Historical task records.
+└── 📜 synapse.json         # Real-time state (Version, Health, Active Gate).
+
+## 3. Promotion Workflow (The Brain Gate)
+1. **Development:** All active coding happens within a specific folder inside `workPackages/active/`.
+2. **Validation:** Once the agent satisfies the "Definition of Done," the state is set to `QA`.
+3. **Promotion:** Agent G (The Brain) reviews the work. Only upon successful QA does Agent G move/copy the refined logic into the `src/` or `assets/` folders.
+4. **Cleanliness:** The `src/` folder remains a pristine "Production-Ready" environment.
+
+## 4. Initialisation Checklist
+Before an App is considered "Initialised," the agent must:
+1. Create the **5xxx MDC** and run `makeIndex.bat`.
+2. Ensure the `/Notes/` and `/largeAssets/` directories exist (**[1016](mdc:1016-session-memory-and-handover.mdc)** and **[1012](mdc:1012-swarm-habitat-map.mdc)**). Create the matching path and `largeAssets` under `C:\vrvish\gitOverflow` if the scaffold creates new T4/T5/T6 folders.
+3. Align with **[1003-Language-and-grammer](mdc:1003-Language-and-grammer.mdc)**: `camelCase` for `src/` files; `Proper case` for `Notes/`.
+
+**Latest Update:** 2026-03-16

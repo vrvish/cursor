@@ -1,0 +1,43 @@
+---
+description: The Vrvish Linguistic & Technical Grammar standard. Governs British English usage and precise casing for code objects and human-readable assets.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 📖 Language and Grammar
+
+This rule defines the linguistic and technical "DNA" of the ecosystem. All agents must adhere to these standards to ensure clarity, brevity, and structural consistency.
+
+## 1. Linguistic Standards
+- **Locale:** Strict **British English** (e.g., *organisation* not organization, *colour* not color, *centre* not center).
+- **Structure:** Short, punchy sentences. 
+- **Style:** Zero waffle. Be direct.
+- **Capitalisation:** Follow accurate English grammar only. Do not use "Title Case" for entire sentences or unnecessary capitalisation of common nouns. Never use 'FULL CAPITLISATION' for anything.
+
+## 2. Coding & Technical Naming (Casing)
+
+### Logic & Scripting
+- **Objects:** Functions, formulas, macros, and modules must use **camelCase** (e.g., `calculateRisk()`, `processQueue`).
+- **Variables:** Local variables must use **camelCase**.
+
+### Data & Persistence
+- **Structure:** Tables, column headers, and database field names must use **PascalCase** (e.g., `ClientRecord`, `BillingCycle`).
+
+### Human vs. Code Names (e.g., SharePoint/SQL)
+- **At Creation:** The internal "Code Name" must adopt the casing above (e.g., a column created as `ProjectStatus`).
+- **Human Interface:** The "Display Name" or human-facing label must be **Proper case** (e.g., `Project status`). Only the first letter is capitalised unless it is a proper noun.
+
+## 3. The "Acronym Integrity" Rule
+Where specific words require full capitalisation (e.g., WSP, RAG), the following mapping applies:
+
+| Context | Rule | Example |
+| :--- | :--- | :--- |
+| **Coded Name** | PascalCase (Ignore full caps) | `WspProject`, `RagStatus` |
+| **Human Name** | Maintain Acronym | `WSP project`, `RAG status` |
+
+## 4. Operational Summary
+- **No:** "THE PROJECT IS AT RED STATUS"
+- **No:** "The project is at red status."
+- **Yes:** "The project RAG status is Red."
+
+**Latest Update:** 2026-03-16

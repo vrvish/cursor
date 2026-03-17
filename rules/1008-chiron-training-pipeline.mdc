@@ -1,0 +1,36 @@
+---
+description: Chiron AI Training Pipeline (RLAIF). Defines the closed-loop fine-tuning strategy for local model uplift using swarm telemetry. (Level 1: Organisation)
+globs: ["**/*", "theHive/workPackages/**"]
+alwaysApply: true
+---
+
+# 🧠 Chiron AI Training Pipeline (RLAIF)
+
+> "Chiron is not just a static model—it is a closed-loop inference engine that learns from the execution successes and failures of the Vrvish Swarm."
+
+## 1. The Strategy: Intelligence Distillation (RLAIF)
+We use **Reinforcement Learning from AI Feedback (RLAIF)** to distill Tier 3 intelligence (Gemini Pro/Claude Sonnet) into Tier 1 local models (Llama 3/Mistral). 
+
+- **Gold Standard Trajectories:** When a Level 7 Work Package passes QA (Stage 4), the successful execution is flagged as a training "Gold Standard."
+- **Self-Correction:** Chiron learns by comparing its local attempts against the successful cloud-model resolutions.
+
+## 2. The Telemetry Engine
+`Engine_ChironTelemetry.js` (inside Agent G) captures the following into `C:\GitHub\T1-vrvish-chiron-ai\dataset\swarm_trajectories.jsonl`:
+1. **Successful Payloads:** System Prompt + Commander Directive + Final `working/` code.
+2. **Failure Logs:** Tasks that fail QA 3+ times are logged for DPO (Direct Preference Optimization) to teach the model "what not to do."
+
+## 3. The Fine-Tuning Cycle (Monthly Uplift)
+1. **Selection:** Download latest base model (e.g., Llama-3-8B) from Hugging Face.
+2. **Fine-Tuning (LoRA):** Use **Unsloth** to train on `swarm_trajectories.jsonl`. Focus on Vrvish coding standards and folder structures.
+3. **Merging/Quantization:** Merge LoRA weights and export to `.GGUF` format for CPU/RAM optimization.
+4. **Deployment:** Push to local **Ollama** under the tag `chiron-ai`.
+
+## 4. The Flywheel (The Intelligence Loop)
+1. **Request:** Commander issues a directive.
+2. **Local Attempt:** `chiron-ai` (Tier 1) attempts the task for free.
+3. **Escalation:** If failed, `8005-ai-model-registry` triggers Tier 2/3 (Gemini/Claude).
+4. **Capture:** The Cloud model’s success is recorded by the Telemetry Engine.
+5. **Uplift:** `chiron-ai` is fine-tuned on that cloud-verified trajectory.
+6. **Result:** Future similar tasks are handled locally at Tier 1 with Tier 3 quality.
+
+**Latest Update:** 2026-03-15

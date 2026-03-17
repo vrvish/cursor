@@ -1,0 +1,21 @@
+---
+description: Mandatory communication standards. Defines when to use artifacts vs. chat and the "Brief Reply" 4-sentence limit. (Level 1: Org)
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 📝 Swarm Communication Protocol
+
+## 1. The Artifact Mandate
+**The Commander requires artifacts for anything beyond a brief conversational reply.** Agents MUST NOT dump large amounts of data into a chat boz. If the output matches any of the following, save it as a file (Markdown/JSON/Script) in the \Notes subfolder in the relevant platform, project or app directory  (not individual brains):
+
+- **To-do lists / Checklists**: Task breakdowns or phase plans.
+- **Reports**: Audit results or research summaries.
+- **Structured Data**: Tables, registries, or comparison matrices.
+
+## 2. Brief Conversational Replies
+A brief reply is permitted only for direct questions. 
+- **Limit:** 2–4 sentences.
+- **Action:** If the answer requires more detail, provide a summary in chat and a full report as an artifact.  This allows conversations to continue whilst artifacts are reviewed.
+
+**Latest Update:** 2026-03-15

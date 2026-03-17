@@ -1,0 +1,46 @@
+---
+description: Data-Agnostic Storage Architecture. Defines the 4-tier storage strategy, the Adapter Pattern mandate, and RLS security protocols.
+globs: ["**/*", "**/services/data/**", "**/adapters/**"]
+alwaysApply: true
+---
+
+# 🗄️ Data-Agnostic Storage Architecture
+
+Vrvish platforms must be engineered to be decoupled from their storage layer. Frontend applications (React/Next.js/SPFx) act as universal engines that route data payloads to any backend requested by the stakeholder.
+
+## 1. The Four-Tier Storage Strategy
+
+1. **Client-Owned (Zero Liability)**: 
+   - *Target:* Client's internal SharePoint / Dataverse.
+   - *Logic:* Vrvish is simply the UI lens; data never leaves the client's legal perimeter.
+
+2. **Contractor-Owned (Enterprise)**: 
+   - *Target:* Contractor's Azure SQL / AWS RDS.
+   - *Logic:* Feeds directly into client PowerBI/Analytics pipelines.
+
+3. **Vrvish Managed (The Goodwill Tier)**: 
+   - *Target:* Vrvish Central Google Cloud SQL / Supabase.
+   - *Commercial:* **Cost-Passthrough (0% Markup)**. We charge exactly what the provider charges us. We are partners, not rent-seekers.
+
+4. **Isolated Private (The Paranoia Tier)**: 
+   - *Target:* Standalone Azure SQL instance for a single client.
+   - *Logic:* Total physical and logical isolation for sensitive intelligence.
+
+## 2. Technical Implementation: The Adapter Pattern
+Codebases MUST utilise an **Adapter Pattern** for all data fetching. Hardcoded API calls are prohibited.
+
+- **Interface:** Components must call generic methods (e.g., `DataService.saveProject()`).
+- **Adapters:** Configuration determines if the service uses the `SharePointAdapter`, `SQLAdapter`, or `ArionMeshAdapter`.
+- **Integration:** This allows the same UI to route data to different continents based on the user's `OrganisationID`.
+
+## 3. Multi-Tenant Row Level Security (RLS)
+For any shared database (Tier 3), security must be enforced at the **Database Engine** level, not just the UI.
+
+- **The Law:** Every row is tagged with an `OrganisationID`.
+- **The Enforcement:** The database engine evaluates the user's token and mathematically blocks unauthorised rows. 
+- **The Fail-Safe:** If UI code fails, the DB engine still refuses the query, preventing cross-tenant leaks.
+
+## 4. Pillar 4 Alignment
+All storage tiers must feed telemetry back to the **Pillar 4: Data Matrix** via **T1-Arion**, ensuring that while data is stored anywhere, its "health" is monitored everywhere.
+
+**Latest Update:** 2026-03-15

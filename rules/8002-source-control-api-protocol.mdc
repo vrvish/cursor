@@ -1,0 +1,104 @@
+---
+description: Mandatory Source Control Protocol. Governed by the Catastrophic Failure Rule, Git API usage, and the App-Root Barricade. (Level 8: Actions)
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 📜 Source Control API Protocol (L8)
+
+**Domain:** `Core_Strategy`  
+**Version:** 2.0 (2026-03-15)  
+**Applies To:** All vrvish Agents  
+
+---
+
+## 1. The Catastrophic Failure Rule
+The Minisforum AgentHouse is an execution node, **not a vault**. Relying purely on local storage for critical infrastructure (`C:\GitHub\...`) is an unacceptable operational risk. A single misconfigured script, hard drive failure, or destructive `rmdir` command can instantly wipe out weeks of work.
+
+## 2. Mandatory Git Synchronisation (The API-First Mandate)
+Every single application, platform, and shared strategy folder MUST be version-controlled and continuously pushed to the remote `vrvish` GitHub organisation.
+
+**The Rule:**
+Agents are **strictly prohibited** from using raw `git` CLI commands (`git add`, `git commit`, `git push`) spawned via `run_command` in PowerShell unless absolutely necessary. Raw CLI commands are prone to interactive authentication hangs, parsing errors, and untrackable failures that stall the Swarm queue.
+
+All active Swarm agents **must** use our dedicated Git Node.js API endpoints or the designated canonical scripts (defined in `scripts.json`) to perform source control operations. 
+
+> [!CAUTION]
+> **GitHub PAT Automation**
+> The underlying API engines rely on the local `C:\GitHub\T1-vrvish-core\theHive\.env` file containing a valid `GITHUB_PAT`. If this token is missing, the API endpoints will fail. The Commander *must* populate the PAT in the `.env` file or securely manage it via the Windows Credential Manager.
+
+## 3. Implementation Logic
+1. **Initialize & Bind**: Every new project scaffolded must be mirrored to the `https://github.com/vrvish/` namespace. Agents must strictly adhere to the VRM taxonomy when naming and placing repositories.
+2. **The API Sync Tool**: Agents must construct a structured JSON payload detailing the files changed, the precise commit message (following conventional commits), and POST this payload to the Swarm's internal Git Sync API (Implementation in WP-208).
+3. **The `Stage Gate` Sync**: When Agent G audits a completed Work Package, the final step of the audit script MUST trigger the Git Sync API to cleanly stage, commit, and push the active T1 platform branch to the remote origin.
+
+## 4. The App-Root Barricade Rule (GitIgnore Safety)
+The Swarm MUST never inject `.gitignore` files nested deeply inside transient folders like `node_modules` or `.next`. Doing so forces Git to traverse massive cache trees and causes catastrophic CPU/RAM overload (Git Overload).
+
+**The Rule:**
+All cache barricades MUST be placed identically at the Application Root level (Level 6) via an anchored `.gitignore`.
+- Explicit absolute anchoring must be used (e.g., `/node_modules/`, `/.next/`, `/dist/`).
+- Only use an overarching ecosystem `*` `.gitignore` if explicitly ordered.
+
+### Canonical .gitignore Template:
+```gitignore
+# ==========================================
+# 🛑 CORE DEPENDENCIES (All Frameworks)
+# ==========================================
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================================
+# 🛑 NEXT.JS / REACT NATIVE / WEB
+# ==========================================
+/.next/
+/out/
+/build/
+/dist/
+
+# ==========================================
+# 🛑 SPFX (SharePoint Framework) & GULP
+# ==========================================
+/temp/
+/lib/
+/release/
+*.sppkg
+
+# ==========================================
+# 🛑 MODERN OFFICE ADD-INS
+# ==========================================
+/.config/
+*.cert
+*.key
+
+# ==========================================
+# 🛑 POWER BI (Custom Visuals / pbiviz)
+# ==========================================
+/.tmp/
+/package/
+*.pbiviz
+
+# ==========================================
+# 🛑 PYTHON (Venv / Data Team / Scripts)
+# ==========================================
+/__pycache__/
+*.py[cod]
+/.venv/
+/venv/
+/env/
+/Olive_House_Venv/
+
+# ==========================================
+# 🛑 SECRETS & ENVIRONMENT VARIABLES
+# ==========================================
+/.env
+/.env.*
+!.env.example
+
+# ==========================================
+# 🛑 OS GENERATED FILES
+# ==========================================
+.DS_Store
+Thumbs.db

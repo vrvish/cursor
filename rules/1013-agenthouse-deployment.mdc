@@ -1,0 +1,45 @@
+---
+description: Day-1 Deployment Protocol for the AgentHouse hardware (Minisforum AI370). Master checklist for OS, AI Engines, and License Vaults.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🏠 AgentHouse: Day-1 Deployment Protocol
+
+This document is the master checklist for configuring the **Minisforum EliteMini AI370** (`192.168.1.149`) as the physical anchor for the vrvish swarm.
+
+## Phase 1: OS & Hardware
+- **Local Setup**: Windows 11 Pro. Join as a **Local Domain User** to prevent OneDrive from hijacking `C:\`.
+- **Power**: Set "Sleep" to **Never**. The AgentHouse must stay awake for the Pulse.
+- **Network**: Ethernet preferred; static IP `192.168.1.149`.
+
+## Phase 2: Swarm Foundation
+Install the core dependencies:
+- **Git for Windows**: For repo sync.
+- **Node.js (LTS)**: For the CommandHub architecture.
+- **Python (Latest)**: Add to PATH (required for Python Swarm AI loops).
+- **Ollama**: Local AI engine. **First Action:** `ollama run llama3:8b`.
+
+## Phase 3: The Safe Vault (Licenses)
+
+### Microsoft Office 2024 Professional Plus (Lifetime License)
+Ensures permanent, offline VBA and Add-in execution.
+- **Key:** `9PNHY-CBXD9-77YRG-6Q3FK-FRK6D`
+- **Link:** `setup.office.com`
+
+### M365 Developer Sandbox
+- **Subscription:** E5 Developer Program for SPFx testing and tenant sandboxing.
+
+## Phase 4: Repository Architecture
+1. **Path:** `C:\GitHub\`
+2. **Core Repos:** `CommandHub`, `theHive`, and related vrvish repositories.
+3. **The .env Bridge:** Ensure `theHive\.env` is populated with keys for the CNS to fire.
+
+## Phase 5: Secure Tunnel (Cloudflare)
+To allow AntiGravity (Cloud) to reach AgentHouse (Local) without firewall issues:
+- **Tunnel Name:** `AgentHouse-Hub`
+- **Routing:** Route `hub.vrvish.com` (or equivalent) to `localhost:3000`.
+- **Logic:** This facilitates the **AG By-Pass** and external webhook ingress.
+
+**Status**: Staged & Waiting for Silicon Delivery.
+**Latest Update**: 2026-03-15

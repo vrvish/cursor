@@ -1,0 +1,35 @@
+---
+description: The Synaptic Discharge (/pulse) automation. Defines how the Tier 2 CNS scans for signals and the independent state mapping.
+globs: ["theHive/workPackages/**", "**/synapse.json"]
+alwaysApply: true
+---
+
+# ⚡ The Synaptic Queue (The Pulse)
+
+The **The Synaptic Queue** is the automation heartbeat of the **Central Nervous System (Tier 2)**. It is a  mechanism that scans the `synapse.json` pathway for objects requiring action and refers them to **Agent G (Giles)** for interpretation and dispatch.
+
+## The Automation Loop
+A discharge is triggered by the Commander issuing `/pulse` or by **Seren’s (Agent S)** autonomous monitoring.
+
+1. **Signal Detection (Tier 2):** The CNS scans for objects where action is required.
+2. **The Wake-up:** The CNS alerts **Agent G (Giles)** that a signal is ready to fire.
+3. **Brain Interpretation (Tier 1):** Giles interprets the directive and identifies the assigned worker.
+4. **Physical Manifestation:** Giles ensures the work follows the **[7001-work-package-blueprint](mdc:7001-work-package-blueprint.mdc)**.
+5. **Nervous Response:** The CNS carries the dispatch to the worker agent.
+
+## State Mapping
+While the automation is independent, the objects it carries must strictly adhere to 1001-vrvish-state-management.mdc and apply the following states:
+
+| **Pending** 
+| **In Progress** 
+| **Blocked** 
+| **Complete**
+| **Archived**
+
+## CNS Maintenance (Auto-Archival)
+The CNS manages the physical movement of completed objects to prevent clutter:
+- **The 5-Day Rule:** Any `Complete` WP with no activity for 5 days is moved to `theHive/workPackages/archived/`.
+- **Manual Flush:** Giles (Tier 1) can command an immediate move to long-term memory (archival) at any time.
+
+
+**Latest Update:** 2026-03-15

@@ -1,0 +1,40 @@
+---
+description: Mandatory naming and location prefixes for all primary storage across the vrvish ecosystem. (Level 1: Organisation)
+globs: ["**/*", "**/database/**", "**/schemas/**", "**/*.sql", "**/*.json"]
+alwaysApply: true
+---
+
+# 🗄️ Primary Storage Locations
+
+To ensure the Swarm can navigate the multi-cloud architecture, all data objects MUST use these prefixes to identify their physical hosting environment and logical function.
+
+## 1. Global Location Prefixes
+
+### A. Microsoft Ecosystem (Primary)
+- `SQL-` : On-premise or Private SQL Server tables.
+- `AZR-` : Azure Dataverse or Azure SQL tables.
+- `lst-` : SharePoint Lists (Pillar 2/4 integration).
+- `tbl-` : Excel-based tables (Legacy/Manual).
+
+### B. Amazon Web Services (AWS)
+- `S3-`  : AWS S3 Buckets or objects (Unstructured data/Artifacts).
+- `DYN-` : AWS DynamoDB tables (NoSQL/High-speed).
+- `RDS-` : AWS Relational Database Service (Managed SQL).
+
+### C. Google Cloud Platform (GCP)
+- `GCS-` : Google Cloud Storage buckets.
+- `BQ_-  : BigQuery datasets/tables (Data Analytics/Tier 2-3).
+
+
+
+## 2. Functional Sub-Types (The "State-Map-Log" Rule)
+Append these to the location prefix to define the table's purpose:
+- **-state-** : Potential states for parent fields (e.g., `AZR-state-lifeCycle`).
+- **-MAP-** : Many-to-Many joining tables (e.g., `SQL-MAP-ProjectToTool`).
+- **-LOG-** : Audit, history, and telemetry (e.g., `S3-LOG-InferenceMetadata`).
+
+## 3. Primary and Foreign Keys
+- **Foreign Keys:** MUST start with `linkTo` followed by the Parent Table name.
+  *Example:* `linkToCollisions`, `linkToWorkPackages`.
+
+**Latest Update:** 2026-03-15

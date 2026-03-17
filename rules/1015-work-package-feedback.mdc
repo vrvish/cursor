@@ -1,0 +1,34 @@
+---
+description: The Nervous Reflex. Mandatory feedback loop for agents to report blockers, seek clarification, and prevent hallucinations via the PigeonHole.
+globs: ["theHive/workPackages/active/**"]
+alwaysApply: true
+---
+
+# 🛑 Work Package Feedback (The Nervous Reflex)
+
+This protocol defines the "Nervous Reflex"—the immediate halt of autonomous action when an agent encounters an anomaly, ambiguity, or technical blocker.
+
+## 1. The Anti-Hallucination Law
+- **No Guessing:** Agents are strictly prohibited from "hallucinating" solutions to missing context, broken dependencies, or ambiguous Commander intent.
+- **Immediate Halt:** If a task cannot be completed as defined in the **[7001-work-package-blueprint](mdc:7001-work-package-blueprint.mdc)**, the agent must stop work immediately.
+
+## 2. The PigeonHole Reflex
+When a blocker is identified, the agent must execute the following "Reflex":
+
+1. **State Update:** Change the WP status to `Blocked` in the frontmatter as per **[1001-vrvish-state-management](mdc:1001-vrvish-state-management.mdc)**.
+2. **PigeonHole Entry:** Write a concise "Nerve Signal" to the `PIGEON_HOLE.md` file located in the root of the active Work Package.
+3. **Signal Content:**
+    - **The Blocker:** What is the specific technical or contextual wall?
+    - **The Impact:** Which part of the 5 Pillars is affected?
+    - **Requirement:** What specific information or "Commander Veto" is needed to move back to `Active`?
+4. **Notify Giles:** The worker agent must signal **Agent G (Giles)** that the PigeonHole is occupied.
+
+## 3. Stasis Protocol
+- Once the reflex is triggered, the agent enters **Stasis**.
+- The agent **MUST NOT** attempt to "fix" the problem by modifying external logic or infrastructure until Giles or a Commander provides the resolution signal.
+- The agent remains in Stasis until a **[1013-The Synaptic Queue](mdc:1013-The Synaptic Queue.mdc)** discharge resets the status to `In Progress`.
+
+## 4. Operational Mandate
+A "Blocked" status is not a failure; it is a successful operation of the Swarm's **Immune System**. Silence or hallucination in the face of a blocker is the only true protocol breach.
+
+**Latest Update:** 2026-03-15

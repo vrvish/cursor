@@ -1,0 +1,33 @@
+---
+description: Mandatory end-of-session reporting and real-time knowledge capture. Ensures intelligence persistence across agent swaps.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🧠 1016: Session Memory & Handover
+
+Intelligence must persist beyond the chat buffer. Agents are responsible for documenting their own learning and providing a clean "Handover Pulse" before termination.
+
+## 1. The Living Documentation (Real-Time)
+- **Capture Atomic Truth:** If a technical solution or strategic insight is found that isn't already a memory, the agent must provide a new `.mdc` file here: `C:\GitHub\T1-vrvish-core\collectiveMemory\knowledgeBank\`.
+
+## 2. End of Session (EOS)
+Before concluding any session, the agent must write a `.mdc` file in `C:\GitHub\T1-vrvish-core\agents\agentX\EOSreports\`.
+- **Content:** Detail what was agreed and what actions were taken.
+- **Filename Format:** `YYYY-MM-DD-description-of-topics.mdc` (e.g., `2026-03-16-postgres-docker-setup.mdc`).
+
+## 3. Handover Notes
+When completing a task or working on a new process, all agents must record a handover note within the `Notes` folder of the **lowest relevant point of the hierarchy**.
+- **Example Path:** `C:\GitHub\T4-helm\T5-strata\T6-strataCommsTracker\Notes\`
+
+### The Handover Structure:
+1. **Current State:** Exact status of the task (e.g., "Logic complete, UI pending").
+2. **Delta:** Specific changes made (Files modified, DB schemas updated).
+3. **The Learning:** Obstacles encountered and how they were bypassed.
+4. **Next Step:** The single most important task for the next agent to pick up.
+
+## 4. Stasis Protocol Alignment
+- Handover notes must align with **[1001-vrvish-state-management](mdc:1001-vrvish-state-management.mdc)**. 
+- If the session ends with a blocker, the Handover must point to the **PigeonHole** entry as per **[1015-work-package-feedback](mdc:1015-work-package-feedback.mdc)**.
+
+**Latest Update:** 2026-03-16

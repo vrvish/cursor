@@ -1,0 +1,33 @@
+description: The ethical and commercial principle of Equitable Distribution. Governs the T1-mesh reward model and planet-first compute narrative. (Level 1: Org)
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🌍 1007: Equitable Distribution (L1)
+
+> *"We don't centralise power. We distribute it — equitably contributed, equitably compensated."*
+
+## 1. The Principle
+**vrvish** is **planet-first** and **people-first**. Every platform must distribute its workload equitably across users and partners. This replaces the traditional centralised data centre model with a distributed mesh.
+
+**Equitable ≠ Equal:** Rewards are proportional to the actual CPU, RAM, and bandwidth contributed, not just participation.
+
+## 2. Planet-First Narrative
+Traditional SaaS burns energy in centralised hubs. Vrvish compute lives on devices already running and consuming power. This reduces the global energy footprint and avoids central data concentration (GDPR-friendly).
+
+## 3. The T1-Mesh Reward Model
+Users and B2B partners that are not paying to be excluded contribute spare resources to the overall vrvish demand. This reduces load on the overall global system. Contribution is rewarded equitably:
+
+| Contributor Type | Reward |
+| :--- | :--- |
+| **Heavy User** (Gamer/Power) | Humain Coins, battle passes, extended free tiers. |
+| **B2B Partner** (Office/Laptops) | % reduction in monthly subscription invoice. |
+| **Specialized Platforms** | Regulatory-permissible fee reductions (Agent R verified). |
+
+## 4. Distributed Intelligence Process
+All future platform development must consider integration with the mesh:
+
+- **T1-chiron (Distributed AI Inference)**: Our synthetic AI lives on user phones, laptops, and servers. It provides simple, specific on-chip automation, manages the handshake to Arion, and handles the distribution/utilisation of information from more intelligent swarm members.
+- **T1-arion (Distributed Data Fabric)**: Our top-level AI facilitating data movement between client data centers. It manages governance to ensure sensitive data does not leave prohibited zones while moving data between clients and vrvish seamlessly.
+
+**Latest Update:** 2026-03-15

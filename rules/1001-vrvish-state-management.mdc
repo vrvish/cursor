@@ -1,0 +1,27 @@
+---
+description: The Vrvish State Management  (Pillar 1). Defines our  universal ethos
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🚦 Pillar 1: State Management
+
+This rule establishes **Pillar 1: States**. It defines how we track the "health" and "progress" of all objects within the Vrvish ecosystem.
+
+## 1. Our ethos
+State management in vrvish is not just a label; it is a **Gate**. 
+- Objects must not bypass states.
+- Moving from one state to another requires satisfying a specific "Definition of Done."
+- State is the primary driver of the **Data Matrix (Pillar 3)** telemetry.
+
+
+## 2. Types of states
+Some states are fundamental and some are functional
+a. Fundamental states determines the actual purpose of an object.  For example a 'task order' can have a primaryState that makes it an "instruction" (the first task order for a piece of work) or a "variation" (describing the change to a previous task order)
+b. Functional stats determines where in a lifecycle an object currently is (currentStatus state could be "Active" or "Inactive")
+
+## 3. Implementation Requirement
+When creating or updating any object in the Data Matrix or Document Vault, agents must clearly define both the **Fundamental Type** and the **Functional Status**.
+
+
+**Latest Update:** 2026-03-15

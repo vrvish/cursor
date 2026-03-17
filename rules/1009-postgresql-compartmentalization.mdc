@@ -1,0 +1,39 @@
+---
+description: PostgreSQL Docker Strategy. Defines containerized isolation per platform, shared core services, and the FDW bridging mechanism.
+globs: ["**/*.sql", "**/docker-compose.yml", "**/database/**"]
+alwaysApply: true
+---
+
+# 🐘  PostgreSQL Compartmentalization Strategy
+
+All vrvish platforms hosted on the **AgentHouse** silicon (`192.168.1.149`) must be isolated at the process level using Docker. This ensures that a failure or breach in one platform cannot cascade to others.
+
+## 1. The Containerized Isolation Model
+
+### Layer 1: The Docker Boundary (Hardest Walls)
+Each platform (Freight, Casinoish, VisionZero) must run its own dedicated **PostgreSQL Docker Container**.
+- **Isolation:** Each container has its own volume, configuration, and memory limits.
+- **Port Mapping:** Unique internal ports (e.g., `5432`, `5433`, `5434`) mapped to a shared internal Docker Network.
+
+### Layer 2: The Core Identity Hub (for example `_profile`,`_feedback`)
+Global features like User Profiles, Auth, and System Settings live in a **Shared Core Container**.
+- **The Mechanism:** Cross-container access is facilitated via **Docker Internal Networking**. 
+- **Platform Access:** When `vrvish_freight` needs a user profile, it queries the `vrvish_core` container over the internal network (`http://vrvish-core:port`).
+- **Data Integrity:** Platforms may store a local "Shadow Copy" of profile IDs, but the source of truth remains the Core Hub.
+
+### Layer 3: Schemas (Soft Walls)
+Inside each container, standard vrvish schema partitioning applies:
+- `public`: App data.
+- `auth_local`: Session tokens specific to that container.
+
+## 2. The Global Data Exception (FDW over Docker)
+Massive datasets that may span multiple platforms (STATS19, OS MasterMap) live in a dedicated `vrvish_global_reference` container.
+
+- **The Bridge:** We use **Postgres FDW** to link platform containers to the Global Reference container across the Docker bridge.
+- **Efficiency:** This prevents duplicating gigabytes of spatial data while allowing local apps to `JOIN` global data as if it were local.
+
+## 3. Deployment Protocol
+- **Docker Compose:** All platform stacks must be defined in a version-controlled `docker-compose.yml`.
+- **Health Checks:** The **CNS (Tier 2)** monitors these containers via PM2 or Docker logs to ensure no "silent crashes" occur.
+
+**Latest Update:** 2026-03-15

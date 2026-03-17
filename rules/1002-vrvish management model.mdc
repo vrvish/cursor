@@ -1,0 +1,30 @@
+---
+description: The 9-Level Hierarchy and 5-State Lifecycle model for the Vrvish Execution Model (Pillar 4 & 5).
+globs: ["**/governance/**", "**/management/**", "**/objective.md", "theHive/workPackages/**"]
+alwaysApply: true
+---
+
+# 🚦 Pillar 4: The 9-level management hierarchy
+
+## 1. Pillar 4: The 9-level management hierarchy
+1. **Level 1: Organisation** - The absolute root: Vrvish.
+2. **Level 2: Client** - Legal Entity (e.g., WCC, WSP Ltd).
+3. **Level 3: Portfolio** - Often aligned to an organisation theme or a specific Commander. For vrvish, see: C:\GitHub\T1-vrvish-core\humans
+4. **Level 4: Platform / Programme** - Collective Governance (e.g., Place, Helm).
+5. **Level 5: Project** - Goal-oriented collection of apps.
+6. **Level 6: App / Task Order** - Major technology packages or discrete work streams.
+7. **Level 7: Work Package** - The 6-Folder execution blueprint.
+8. **Level 8: Actions / Activity** - Granular tasks assigned to persons/agents.
+9. **Level 9: Effort** - Atomic tracking (Quantity + Unit of Measure + Quality Ref).
+
+## 2. Pillar 5: State Rules
+Items in Pillar 4 are governed by the following state transitions:
+
+### A. Lifecycle Status (APM Aligned)
+`Concept` ➡️ `Definition` ➡️ `Deployment` ➡️ `Transition` ➡️ `Adoption`
+
+### B. Commercial & Client States
+- **Commercial State**: `Billable` | `Non-Billable`
+- **Client Status**: `Client` | `Internal`
+
+**Latest Update:** 2026-03-15

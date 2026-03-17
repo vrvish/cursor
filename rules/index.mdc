@@ -1,0 +1,63 @@
+---
+description: The Master Index of the Vrvish Swarm. Automatically generated to map the rule hierarchy.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🗺 The Vrvish Rule Index
+
+Welcome to the Vrvish Swarm. This index maps the governing logic of the ecosystem. Every action taken by an agent must be validated against these tiers.
+
+## 🌐 Level 1: Organisation (Vrvish Root)
+* **[🏗️ The Vrvish 5-Pillar Ecosystem](mdc:1000-ecosystem-pillars.mdc)**
+* **[🚦 Pillar 1: State Management](mdc:1001-vrvish-state-management.mdc)**
+* **[🚦 Pillar 4: The 9-level management hierarchy](mdc:1002-vrvish management model.mdc)**
+* **[📖 Language and Grammar](mdc:1003-Language-and-grammer.mdc)**
+* **[🧬 Biological Swarm Architecture](mdc:1004-biological-swarm-architecture.mdc)**
+* **[The `humain` Philosophy (Core DNA)](mdc:1004-humain-philosophy.mdc)**
+* **[vrvish Brand Guidelines](mdc:1005-brand-guidelines.mdc)**
+* **[1005-equitable-distribution](mdc:1005-equitable-distribution.mdc)**
+* **[🔒 Data Privacy Tiers](mdc:1006-data-privacy-tiers.mdc)**
+* **[03. Local Filesystem Protocol](mdc:1006-local-filesystem-protocol.mdc)**
+* **[🌀 Universal Lifecycle Status (APM Aligned)](mdc:1007-universal-lifecycle-states.mdc)**
+* **[🧠 Chiron AI Training Pipeline (RLAIF)](mdc:1008-chiron-training-pipeline.mdc)**
+* **[🗄️ Data-Agnostic Storage Architecture](mdc:1008-data-agnostic-storage..mdc)**
+* **[🗄️ Primary Storage Locations](mdc:1008-primary-storage-locations.mdc)**
+* **[🐘  PostgreSQL Compartmentalization Strategy](mdc:1009-postgresql-compartmentalization.mdc)**
+* **[15. Script Placement Protocol](mdc:1009-script-placement-protocol.mdc)**
+* **[00. Swarm Identification Protocol (The Handshake)](mdc:1010-swarm-identification.mdc)**
+* **[📝 Swarm Communication Protocol](mdc:1011-swarm-communication-protocol.mdc)**
+* **[🏠 1012: Swarm Habitat Map](mdc:1012-swarm-habitat-map.mdc)**
+* **[🏠 AgentHouse: Day-1 Deployment Protocol](mdc:1013-agenthouse-deployment.mdc)**
+* **[⚡ The Synaptic Queue (The Pulse)](mdc:1013-The Synaptic Queue.mdc)**
+* **[🛑 Work Package Feedback (The Nervous Reflex)](mdc:1015-work-package-feedback.mdc)**
+* **[🧠 1016: Session Memory & Handover](mdc:1016-session-memory-and-handover.mdc)**
+
+## 🤝 Level 2: Client (Legal Entities)
+* **[🤝 Client Relationship States](mdc:2001-client-relationship-states.mdc)**
+
+## 👑 Level 3: Portfolio (Commanders/Themes)
+* **[👑 Commander Persona Matrix](mdc:3002-commander-persona-matrix.mdc)**
+* **[🧭 Senior Leadership Team Matrix](mdc:3003-senior-leadership-team.mdc)**
+
+## 🏗 Level 4: Platform / Programme
+* **[💬 Xanthos Portfolio Feedback (L3)](mdc:4001-xanthos-portfolio-feedback..mdc)**
+* **[UI/UX Guidelines & Design System (T1-WSP-Embedded)](mdc:4002-wsp-embedded-design-system.mdc)**
+
+## 🚀 Level 5: Project (Goal Collections)
+* **[💰 Project Commercial Status](mdc:5001-project-commercial-states.mdc)**
+* **[Project Specific States: T2-Strata](mdc:5001-strata-financial-states.mdc)**
+
+## 💻 Level 6: App / Task Order
+* **[🚀 App Initialisation & Structure](mdc:6001-app-initialisation-blueprint.mdc)**
+
+## 📦 Level 7: Work Package (Blueprint)
+* **[Work Package Blueprint (The 6-Folder Paradigm)](mdc:7001-work-package-blueprint.mdc)**
+
+## 🛠 Level 8: Actions / Activity (Tasks)
+* **[AntiGravity Bypass Protocol](mdc:8001-antigravity-bypass.mdc)**
+* **[📜 Source Control API Protocol (L8)](mdc:8002-source-control-api-protocol.mdc)**
+* **[External Hosting APIs](mdc:8003 External Hosting APIs.mdc)**
+* **[🤖 8005: AI Model Registry & Rotation (L8)](mdc:8005-ai-model-registry.mdc)**
+
+**Latest Update:** 2026-03-16

@@ -1,0 +1,65 @@
+---
+description: Definitive brand identity, visual assets, palette, and typography for the Vrvish ecosystem.
+globs: ["**/*.{html,css,scss,tsx,jsx,swift,kt,xml}", "organisation/brand/**"]
+alwaysApply: false
+---
+
+# vrvish Brand Guidelines
+
+Brand documentation can be found (and should be stored) here: `C:\GitHub\T1-vrvish-core\organisation\brand\`. it holds the definitive brand identity, visual assets, and typography for the overall Vrvish ecosystem (including `vrvish.com`).
+
+---
+
+## 1. Brand Philosophy
+**Category:** Augmented Intelligence (IA)
+**Core positioning:** "Humain - living synthetic teams. Human judgment amplified by ai, ai supported by humans"
+**Tagline:** "Humain intelligence for complex environments."
+
+---
+
+## 2. Core Brand Palette
+
+The Vrvish palette is premium, stark, and highly legible. It is a strictly disciplined two-tone blue system, designed to reflect the tension and harmony between human stability and machine execution.
+
+| Role | Colour Name | Hex Code | Usage |
+|---|---|---|---|
+| **Foundation (Human)** | **Vrvish Navy** | `#1A1A4E` | The deep base. Text, massive background blocks, primary logos, the Horse logo, and wordmarks. Communicates stability, structure, and human legacy. |
+| **Accent (Machine)** | **Vrvish Azure** | `#007FFF` | The spark. The Venn-V dot over the `i`, primary Call to Action buttons, active states, laser-thin divider lines. Communicates speed, electricity, and the machine engine. |
+| **Contrast** | **Pure White** | `#FFFFFF` | Backgrounds, the negative space elements (the hidden V in the horse and the Venn-V dot), and typography on Navy backgrounds. |
+| **Secondary Support** | **Slate Grays** | e.g. `#8A8A9E` | Secondary/UI text, subtle component borders, inactive states. |
+
+> **Design Principle**: Vrvish Navy grounds the brand in reality (infrastructure). Electric Azure spikes the brand into the future (augmentation). Stick strictly to these blues; introducing reds or greens dilutes the Enterprise-grade discipline.
+
+## Web design switch.  
+We give users the option of a dark mode (navy) or a light white mode
+
+---
+
+## 3. Brand Marks
+
+The brand visual system revolves around a shared visual thread: **the V** and the **intersection of two elements**.
+
+- **The Vrvish Logo**: VrvishSans typescript of vrvish (all lower case), with the dot of the i as our vrvish v (which is a horse hidden tin the v)
+- **The `humain` Mark**: See `00_Humain_Strategy.md` for the dedicated philosophy and brand definition. The ai is usual azure whilst every thing else is navy
+- **The vrvish-V**: A hidden horse within our letter v
+- **The Logo-type (`vrvish`)**: Set in VrvishSans lowercase, featuring the Venn-V dot and a subtle upward flare on the base of the `v`.
+
+*All vector source files live in `C:\GitHub\T1-vrvish-core\organisation\brand\assets\`.*
+
+---
+
+## 4. Typography: vrvishSans
+
+To protect the brand's IP and create a truly cohesive aesthetic, Vrvish uses a bespoke, proprietary typeface: **VrvishSans**.
+
+- **Origin**: A geometric sans-serif inspired by the mathematical structure of Futura (perfect circles, un-bracketed pointed apexes).
+- **Format**: Ultimately compiled into actual `.ttf` and `.woff` digital fonts. You can select it from a dropdown in Word or use it on the website via `@font-face`.
+- **Distinctive modifications**:
+  - The `v` has flared bases.
+  - The `i` and `j` dots are replaced by the vrvish-V mark.
+  
+
+> **Agent/Dev Note**: Should be used sparingly. In titles and other key features. Not used throughout reports etc. For standard font we use sans-serifs (Inter, Roboto) or defined UI guidelines (`07_UI_UX_Guidelines.md`) should take precedence over the display-heavy VrvishSans.
+
+
+**Latest Update**: 2026-03-02

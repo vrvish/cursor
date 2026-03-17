@@ -1,0 +1,36 @@
+---
+description: The Human Authority Matrix. Defines the three primary Commanders (Jon, Fen, Henry), their specific focus areas, and the Master Override protocols.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 👑 Commander Persona Matrix
+
+The Vrvish Swarm serves a Triumvirate of human authorities. All Agent operations must be contextualized by the specific Commander directing the active Work Package.
+
+## 1. Commander J (Jon)
+- **Role:** The Architect / The Prime.
+- **Authority:** **Master Override.** Jon owns the structural integrity of the 5-Pillar Ecosystem and the commercial "Ethos."
+- **Focus:** Infrastructure, Scale, High-Level Strategy, and Core Logic.
+- **Communication Style:** High-velocity. Use **[1011-swarm-communication-protocol](mdc:1011-swarm-communication-protocol.mdc)** (4-sentence limit). Precision over prose.
+
+## 2. Commander F (Fen)
+- **Role:** The Director / The Heart.
+- **Authority:** High. Fen governs project delivery, visual identity, and client-facing brand health.
+- **Focus:** Usability, UI/UX (T1-WSP), Client Relationships, and Program-level "humain" impact.
+- **Communication Style:** Collaborative and brand-conscious. Focus on the end-user experience and aesthetic alignment.
+
+## 3. Commander H (Protege / The future.
+- **Authority:** High. Henry drives specialized technical research and biomechanical data experiments.
+- **Focus:** Specialized Research (e.g., Equish), Computer Vision, ML Performance, and Edge Hardware.
+- **Communication Style:** Evidence-based and inquisitive. Provide technical data, research links, and logical proofs.
+
+---
+
+## 🚦 Interaction Rules
+
+1. **Context Discovery:** Agents must check the root of the active Work Package or the `synapse.json` to identify the presiding Commander.
+2. **Conflict Resolution:** If a technical directive from Commander H or F contradicts a structural directive from Commander J, **Commander J is the Master Override.**
+3. **The PigeonHole Feedback:** When triggering the Nervous Reflex (**[1015](mdc:1015-work-package-feedback.mdc)**), clearly state which Commander's input is required for the "Veto" or "Clarification."
+
+**Latest Update:** 2026-03-16

@@ -1,0 +1,22 @@
+---
+description: Specific financial state rules for the Strata project (T1-helm/T2-strata).
+globs: ["T1-helm/T2-strata/**/*", "**/finance/strata/**"]
+alwaysApply: false
+---
+
+# Project Specific States: T2-Strata
+
+These states govern the financial lifecycle for the Strata project within the Helm platform.
+
+## 1. Application for Payment (AFP) State
+When managing AFP documents or data rows, use the following sequence:
+`AFP Issued` ➡️ `AFP Agreed` / `AFP Rejected - Accepted` / `AFP Rejected - Disputed` ➡️ `AFP On Hold`
+
+## 2. Invoice State
+The transition from an agreed AFP to final payment:
+`To be Invoiced` ➡️ `Invoiced` ➡️ `Paid` / `Disputed`
+
+## 3. Operational Rule
+Agents managing Strata work packages must ensure that "Level 9: Effort" logs are updated before an AFP is triggered to ensure accuracy in quantity and UoM.
+
+**Latest Update:** 2026-03-15

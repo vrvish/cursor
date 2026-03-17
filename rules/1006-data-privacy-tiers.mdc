@@ -1,0 +1,29 @@
+---
+description: Mandatory dual-tier data governance model for all vrvish platforms. Defines privacy boundaries and the universal feedback schema. (Level 1: Org)
+globs: ["**/*", "**/feedback/**", "**/config/**"]
+alwaysApply: true
+---
+
+# 🔒 Data Privacy Tiers
+
+All vrvish platforms natively impose a dual-tier data governance model. This is a non-negotiable product principle.
+
+## 1. The Two Tiers
+
+### Tier 1: Default (Subsidised)
+- **Status:** Standard access level.
+- **Client data:** The "No client data Leaves the Premises" rule. This is paramount on all our tiers. 
+- **AI learning:** Permits vrvish AI models to learn from anonymized local interaction streams.
+- **Telemetry:** Activity logs are securely transmitted back to the **AgentHouse Central Database** (Pillar 4: Data Matrix).  Feedback (both active and passive) from users is used to train our AI (for example where users click to determine what buttons are being overlooked) 
+- **Value:** User receives a subsidised rate in exchange for helping the swarm improve.
+
+### Tier 2: Premium (Complete Privacy)
+- **Status:** Paid/Enterprise tier.
+- **Client data:** The "No Data Leaves the Premises" rule. 
+- **AI learning:** Our AI is not trained on any data from our clients. There is one exception, where a user sends us feedback and ticks a button that says "I understand my organisation does not normally allow data to leave the premises. Please tick here to include your recent activity log (last 48 hours) for us to better understand your feedback."
+- **Telemetry:** Local logs are strictly held on the client device or tenant for internal auditing only. Apart from the exception above.
+- **Value:** Zero data leakage; no telemetry leaves the device.
+
+## 2. The Universal Feedback Widget (Xanthos)
+All platforms must implement vrvish|feedback via the shared `C:\GitHub\T1-vrvish-xanthos-feedback` platform (WP-020). Bespoke systems are prohibited.
+
