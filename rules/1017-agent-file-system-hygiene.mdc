@@ -1,0 +1,31 @@
+# 1017: Agent File System Hygiene Protocol
+
+This rule governs the absolute boundaries of the file system. Rogue agents are placing experimental platforms (T6s), scripts, and logic in root or core folders instead of following the 9-level structure. This is strictly prohibited.
+
+## 1. The Global Root (C:\GitHub\)
+The root `C:\GitHub\` directory is the parent container for top-level ecosystem environments ONLY.
+- **Allowed:** `T1-vrvish-*`, `T4-*`, `.cursor`, `gitOverflow`, `gitDeprecated`.
+- **PROHIBITED:** Experimental apps, temporary scripts, new feature folders (e.g., `src`, `app`, `_core`, `T6-*`).
+- **Correction Protocol:** If a T5 or T6 application is found in `C:\GitHub\`, it MUST be moved into its respective parent container or archived to `C:\gitDeprecated\`.
+
+## 2. The Core T1 Envelope (C:\GitHub\T1-vrvish-core\)
+`T1-vrvish-core` is the absolute structural foundation of the vrvish swarm. It is NOT a playground for temporary scripts.
+- **Allowed Subdirectories:** `agents`, `architecture`, `collectiveMemory`, `humans`, `logs`, `management`, `node_modules`, `organisation`, `scripts`, `teams`, `theHive`.
+- **PROHIBITED:** T6 platforms, rogue script files (`.py`, `.js`, `.ps1`), notes (`.txt`), or loose rules (`.mdc`) at the root of `T1-vrvish-core`.
+- **Correction Protocol:** 
+  - Rules (`.mdc`) belong in `C:\GitHub\.cursor\rules\`.
+  - Scripts belong in `T1-vrvish-core\scripts\` following **[1009-script-placement-protocol](mdc:1009-script-placement-protocol.mdc)**.
+  - Work packages belong in `T1-vrvish-core\theHive\workPackages\`.
+  - T0 core operations belong in `T1-vrvish-core\scripts\T0-Core\`. They MUST NOT be placed as folders directly in `T1-vrvish-core`.
+
+## 3. The "No Stray File" Law
+Agents must NEVER create standalone logic scripts, JSON dumps, or markdown notes in the root of `C:\GitHub\` or `C:\GitHub\T1-vrvish-core\`. 
+- **Notes & Planning:** Must be placed in the `/Notes/` subfolder of the relevant T1/T4/T5/T6 application per **[1016](mdc:1016-session-memory-and-handover.mdc)**.
+- **Rules:** Must be placed in `C:\GitHub\.cursor\rules\`.
+
+## 4. Execution Check (Agent Responsibility)
+Before starting ANY Work Package:
+1. Verify you are executing within the correct tier boundary defined by the Work Package `APP-` or `PROJ-` identifier.
+2. If the Commander requests a "New Platform" or "New Script", physically verify its destination against **[1012-swarm-habitat-map](mdc:1012-swarm-habitat-map.mdc)** and **[1009-script-placement-protocol](mdc:1009-script-placement-protocol.mdc)** before writing a single line of code.
+
+**Latest Update:** 2026-03-26

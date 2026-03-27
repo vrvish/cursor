@@ -6,7 +6,24 @@ alwaysApply: false
 
 # vrvish Brand Guidelines
 
-Brand documentation can be found (and should be stored) here: `C:\GitHub\T1-vrvish-core\organisation\brand\`. it holds the definitive brand identity, visual assets, and typography for the overall Vrvish ecosystem (including `vrvish.com`).
+Brand documentation can be found (and should be stored) here: `C:\GitHub\T1-vrvish-core\organisation\brand\`. It holds the definitive brand identity, visual assets, and typography for the overall Vrvish ecosystem (including `vrvish.com`).
+
+## Brand Folder Structure
+
+```
+organisation/brand/
+├── outputs/           # Production-ready assets (use these)
+│   ├── humain/        # humain.svg
+│   ├── logo/          # vrvish_3vs_white.svg, vrvish_3vs_no_white.svg
+│   └── type/vrvishSans/ — font glyphs (i.svg, j.svg)
+└── working/           # Source files, edits
+    ├── humain/
+    ├── logo/
+    ├── type/vrvishSans/
+    └── SS/            # Source SVGs, Inkscape exports
+```
+
+Assets are synced from `outputs/` to CommandHub and marketing site via `scripts/T2-tools/Sync-BrandAssets.ps1`.
 
 ---
 
@@ -23,7 +40,10 @@ The Vrvish palette is premium, stark, and highly legible. It is a strictly disci
 
 | Role | Colour Name | Hex Code | Usage |
 |---|---|---|---|
-| **Foundation (Human)** | **Vrvish Navy** | `#1A1A4E` | The deep base. Text, massive background blocks, primary logos, the Horse logo, and wordmarks. Communicates stability, structure, and human legacy. |
+| **Foundation (Human)** | **Vrvish Navy** | `#00142A` | The deep base. Text, massive background blocks, primary logos, the Horse logo, and wordmarks. Communicates stability, structure, and human legacy. |
+| **Navy Surface** | **Navy Surface** | `#0a1e32` | Slightly elevated navy for surfaces (buttons, inputs, cards). Use on navy theme. |
+| **Navy Elevated** | **Navy Elevated** | `#0f2440` | Dropdowns, popovers, overlays. One step above surface. |
+| **Navy Subtle** | **Navy Subtle** | `#152a48` | Subtle backgrounds, scrollbar thumb, tertiary surfaces. |
 | **Accent (Machine)** | **Vrvish Azure** | `#007FFF` | The spark. The Venn-V dot over the `i`, primary Call to Action buttons, active states, laser-thin divider lines. Communicates speed, electricity, and the machine engine. |
 | **Contrast** | **Pure White** | `#FFFFFF` | Backgrounds, the negative space elements (the hidden V in the horse and the Venn-V dot), and typography on Navy backgrounds. |
 | **Secondary Support** | **Slate Grays** | e.g. `#8A8A9E` | Secondary/UI text, subtle component borders, inactive states. |
@@ -44,7 +64,7 @@ The brand visual system revolves around a shared visual thread: **the V** and th
 - **The vrvish-V**: A hidden horse within our letter v
 - **The Logo-type (`vrvish`)**: Set in VrvishSans lowercase, featuring the Venn-V dot and a subtle upward flare on the base of the `v`.
 
-*All vector source files live in `C:\GitHub\T1-vrvish-core\organisation\brand\assets\`.*
+*Production assets live in `organisation/brand/outputs/` (logo, humain, type/vrvishSans). Source files and edits live in `organisation/brand/working/`.*
 
 ---
 

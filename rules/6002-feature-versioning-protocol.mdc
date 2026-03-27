@@ -1,0 +1,68 @@
+# 🔖 6002: Feature Versioning Protocol
+
+**Version:** 1.0 (2026-03-24)  
+**Applies to:** All agents making changes to live, in-use T6 application features.
+
+---
+
+## 1. The Core Law
+
+**Never overwrite a production file to deliver a new version of a feature.**
+
+A production file is any file inside a `T6-*/src/` directory that is actively reachable by users.  
+Overwriting it mid-session disrupts the Commander mid-task and destroys the ability to compare or roll back.
+
+---
+
+## 2. The Versioned Route Pattern
+
+When a new version of an existing page, feature, or API is required:
+
+1. **Keep V1 untouched** at its original path (e.g., `/write-problem/`).
+2. **Deploy the new version at a versioned route** (e.g., `/write-problem-v2/`).
+3. **Add a subtle "Try V2 →" link** on the V1 page pointing to the new route.
+4. **Register the new route in `ports.json`** if it warrants a separate PM2 process.
+5. **Only promote V2 to replace V1** after the Commander explicitly approves it.
+
+### Example — correct structure:
+```
+src/app/write-problem/page.tsx         ← V1 (unchanged, still live)
+src/app/write-problem-v2/page.tsx      ← V2 (new features, staged for review)
+```
+
+---
+
+## 3. Separate Port Rule
+
+If a new version is a **substantially different application** (new tech stack, new data model, new dependencies), it **must** run on a new port:
+
+- Register it in `C:\GitHub\T1-vrvish-core\management\ports.json` using `API_ProcessManager.py add`.
+- Example: RSA Assistant V1 on port `3015`, RSA Assistant V2 on port `3016`.
+- This prevents V1 users being disrupted by V2 restarts or dependency conflicts.
+
+---
+
+## 4. When This Protocol Applies
+
+| Scenario | Rule |
+| :--- | :--- |
+| Adding a new field or button to an existing page | Versioned route (`/page-v2/`) |
+| Rebuilding a page from scratch | New route AND consider new port |
+| Changing an API route's response shape | New route (`/api/suggest-v2/`); keep old route live |
+| Updating a shared engine (non-breaking) | Direct edit is acceptable |
+| Updating a shared engine (breaking change) | New engine file (`Engine_X_v2.js`) |
+
+---
+
+## 5. Commander Promotion Gate
+
+The Commander (or Agent G with retrospective notification) must explicitly confirm before:
+- Renaming `/v2/` routes to replace the V1 path.
+- Removing or archiving V1 files.
+- Changing the default port assignment in `ports.json`.
+
+This aligns with the **Agent G Promotion Workflow** in **[6001-app-initialisation-blueprint](mdc:6001-app-initialisation-blueprint.mdc)**.
+
+---
+
+**Latest Update:** 2026-03-24

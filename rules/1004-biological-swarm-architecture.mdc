@@ -23,7 +23,7 @@ This framework ensures autonomy and resilience by distributing responsibility ac
     - Monitors the swarm for crashes, memory leaks, or "nerve" failures.
     - **Wake-up Protocol:** Autonomously wakes or advises Agent G when new signals enter the queue or when a system anomaly is detected.
 
-### Tier 3: The Immune System (Agent D — Defense)
+### Tier 3: The Immune System (Agent A — Arion Safeguard)
 - **Role:** External perimeter defense.
 - **Function:** Monitors ingress webhooks, blocks prompt injections, audits connected accounts for suspicious patterns, and prevents destructive pipeline commits or CVE vulnerabilities.
 

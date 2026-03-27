@@ -21,11 +21,12 @@ This rule defines the linguistic and technical "DNA" of the ecosystem. All agent
 - **Variables:** Local variables must use **camelCase**.
 
 ### Data & Persistence
-- **Structure:** Tables, column headers, and database field names must use **PascalCase** (e.g., `ClientRecord`, `BillingCycle`).
+- **Tables (SQL/SharePoint):** Must use **PascalCase**  (e.g., `ClientRecord`, `BillingCycle`).  Because we are data agnostic, tables will not be labeled using any prefix for source type (tbl, sql,list etc) as this will make it harder to upgrade clients
+- **Columns & Fields:** Database columns and field names must use **camelCase** (e.g., `clientId`, `validFrom`, `linkToPortfolioId`).
 
 ### Human vs. Code Names (e.g., SharePoint/SQL)
-- **At Creation:** The internal "Code Name" must adopt the casing above (e.g., a column created as `ProjectStatus`).
-- **Human Interface:** The "Display Name" or human-facing label must be **Proper case** (e.g., `Project status`). Only the first letter is capitalised unless it is a proper noun.
+- **At Creation:** The internal "Code Name" must adopt the casing above (e.g., `ProjectStatus`, `linkToUser`).
+- **Human Interface (Labels):** For data-structures and technical viewers (CommandHub), the "Display Name" must match the **camelCase** technical name with NO spaces (e.g., `linkToPortfolioId`). Natural English with spaces is strictly reserved for high-fidelity client reports or non-technical document titles.
 
 ## 3. The "Acronym Integrity" Rule
 Where specific words require full capitalisation (e.g., WSP, RAG), the following mapping applies:

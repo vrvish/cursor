@@ -1,0 +1,333 @@
+# 🗄️ Vrvish Data Model & Architecture (Pillar 4)
+
+This rule defines the structural blueprint, schema standards, and governance logic for all database systems (SQL, SharePoint, Firebase) within the Vrvish ecosystem.
+
+---
+
+## a. Setup
+
+### 1.1 Agnostic Schema & Atomic Integrity (The Golden Rules)
+
+#### 1.1.1 Core Atomic Constraints
+1. **Surrogate PKs Only:** Every row MUST use a single-column UUID. No composite keys.
+2. **Zero Structural FKs:** Business tables MUST NOT contain parent links. Links live in the MAP.
+3. **Immutability (Temporal Birth):** Rows are NEVER updated. Changes require a new version (N+1).
+4. **Permanent Data:** NEVER physically delete. Expire records by setting `validTo` to Now.
+5. **Level Awareness:** Every row MUST carry a `hierarchyLevel` (1–9).
+
+#### 1.1.2 Technical Standards
+1. **Pure API Logic:** No mutating Stored Procedures or Triggers. State and transition logic lives exclusively in the API. Read-Only Views and Recursive Read-Only Functions are highly encouraged strictly for human readability, BI reporting, and deep graph traversal of the MAP table (e.g., instantly fetching a full 9-level hierarchy tree), but they must NEVER be used to mutate data or hide business rules.
+2. **Type Enforcement:** Monetary = `NUMERIC`, Timestamps = `BigInt`, Flags = `BOOLEAN`.
+3. **Naming Protocol:** Tables = `[prefix]PascalCase`, Fields = `camelCase`. Contexts = `snake_case`.
+
+#### 1.1.3 The Originating Anchor
+- All versions of a record MUST share the same `originatingId`. This is the "Golden Thread."
+
+---
+
+## 2. Universal tables
+
+### 2.2 Atomic Node Blueprint - all tables
+
+All business tables MUST be "Atomic"—they contain data and temporal metadata, but **zero hardcoded structural foreign keys**.
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `[tableName]Id` | UUID/PK | Unique surrogate key for this specific record version. |
+| `originatingId` | UUID | The PK of Version 1 (The "Golden Thread" identifier). |
+| `previousVersionId` | UUID | The PK of the immediate predecessor (Version N-1). |
+| **Business Columns** | camelCase | Domain-specific data (e.g., `projectName`, `totalBudget`). |
+| `hierarchyLevel` | Integer | **(1-9)** Mandatory level indicator for context awareness. |
+| `validFrom` | BigInt | Temporal start header (Unix milliseconds UTC). |
+| `validTo` | BigInt | Temporal expiry header (Active = `253402300800000`). |
+| `systemVersion` | Integer | Lineage Counter for **Plan B** concurrency protection. |
+| `createdBy` | UUID | The `userId` of the actor who birthed this version. |
+| `createdDateTime` | BigInt | Audit timestamp (Unix milliseconds UTC). |
+| `sourceSystem` | String | Originating platform (e.g., "Helm", "Mobile_App"). |
+| `originatingIp` | String | Network trace for security forensics. |
+
+### 2.2.1 Universal Matter Node
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `formalRef` | String | e.g., "REQ-01", "EWN-05", "LL-2026-01". |
+| `title` | String | The short title of the matter. |
+| `summary` | Text | High-level brief (or Root Cause for Lessons). |
+| `description` | Text | Detailed breakdown (or Recommendation for Lessons). |
+| `priorityRank` | Integer | 1-5 scale of importance/severity. |
+| `categoryTag` | String | e.g., "Sustainability", "Commercial", "Safety". |
+
+### 2.2.2 Universal Quantity Node
+*(Replaces the Effort and Impact nodes. Whether this is recorded work or an estimated impact is defined by the MAP).*
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `qtyValue` | Numeric | The numerical value or shift (e.g., 7.5, 5000, 0.8). |
+| `uom` | String | Unit of Measure (e.g., "Hours", "GBP", "CO2e"). |
+| `contextRef` | String | URI/Hash to evidence, or human justification for calculation. |
+| `locationPoint` | String | Geo-spatial coordinate of the effort/impact. |
+
+### 2.2.3 Universal Commercial Node
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `documentReference` | String | Human ID (e.g., "INV-2026-001" or "AFP-05"). |
+| `grossValue` | Numeric | Total currency value before tax. |
+| `currencyCode` | String | ISO 3-letter code (e.g., "GBP"). |
+| `issueDate` | BigInt | Document birth (Unix MS UTC). |
+| `dueDate` | BigInt | Response/Payment deadline (Unix MS UTC). |
+| `externalLink` | String | URI to PDF or ERP system record. |
+
+### 2.2.4 Universal Schedule Node
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `startDate` | BigInt | Commencement timestamp (Unix MS UTC). |
+| `endDate` | BigInt | Completion/expiry timestamp (Unix MS UTC). |
+| `locationPoint` | String | Geo-spatial coordinate or WKT. |
+
+### 2.2.5 User & Identity Nodes
+
+**UserAccount Node**
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `entityType` | String | e.g., "Human", "API_Agent". |
+| `displayName` | String | Human-readable name. |
+| `accountStatus` | String | Active, Suspended, etc. |
+
+**UserAuthMethod Node**
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `authProvider` | String | e.g., "AzureAD", "Google", "Email". |
+| `providerSubjectId`| String | External ID from the provider. |
+| `lastLogin` | BigInt | Timestamp of last successful auth. |
+
+**Persona Assignment Rules (Multi-Role)**
+A single User may hold multiple personas. Authority is resolved via the "nearest" mapping to target.
+1. **Global Persona:** `gov_assign` at L1 (Organisation) applies ecosystem-wide.
+2. **Scoped Persona:** `gov_assign` at a specific node (e.g., L5 Project) applies only to that node and children.
+3. **Audit Priority:** L1 high-seniority roles take precedence for auditing; L5 roles govern tactical transitions.
+
+### 2.2.6 FieldRestrictions Node
+
+"Stop" signals defining withheld data regardless of Role rank.
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `columnName` | String | Target field (or `_ROOT_` to hide the whole row). |
+| `restrictionContext` | String | `EXTERNAL_ONLY` (Federation) or `RANK_LIMIT` (Internal). |
+| `maskingType` | String | `HIDDEN` (null), `REDACTED` (***), or `READ_ONLY`. |
+
+### 2.2.7 Universal Quality Node
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `ragStatus` | String | `RED`, `AMBER`, `GREEN`, `GREY`. |
+| `periodCode` | String | e.g., "2026-W12" or "March-2026". |
+| `verificationLink` | String | URI to evidence or external dashboard. |
+| `complianceFlag` | Boolean | Pass/Fail toggle. |
+
+### 2.2.8 Universal Log Node
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `eventCategory` | String | e.g., "Security", "Federation", "Conflict". |
+| `message` | Text | Event description. |
+| `payload` | Text | JSON/Text raw technical traces. |
+
+### 2.2.9 Federation Contract Node
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `linkToMappingId` | UUID | Pointer to the `fed_pointer` row in the MAP. |
+| `remoteEndpoint` | String | The base URI/API Root. |
+| `authCredentialRef` | String | Pointer to the secure Vault or Identity node. |
+| `syncPolicy` | String | `LIVE_ONLY`, `FED_SHADOW`, `OFFLINE`. |
+| `ttlMinutes` | Integer | Cache expiry time. |
+| `lastVerified` | BigInt | Last successful handshake. |
+| `handshakeStatus` | String | `ACTIVE`, `UNAUTHORIZED`, `TIMEOUT`, `REVOKED`. |
+
+### 2.4 Federation Logic Rules
+1. **Proxy Shell Requirement:** Every `fed_pointer` must have a "Shell" record in local T1-T9.
+2. **Handshake Priority:** If `REVOKED`, data vanishes immediately (Sovereignty).
+3. **Shadow Masking:** `FED_SHADOW` snapshots must be scrubbed via `gov_restrict` before storage.
+
+---
+
+## 3. Mapping (Universal Relationship Manager)
+
+The `MAP` table is the only place where links exist. `linkToId` columns are **Strings** to allow for global URI pointers.
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `mappingId` | UUID/PK | Unique link identifier. |
+| `linkToParentId` | **String** | UUID of the "Source" (Parent Record, User, or State). |
+| `linkToChildId` | **String** | UUID of the "Subject" (The record being governed). |
+| `mappingContext` | String | The logic engine (e.g., `core_parent`, `state_current`). |
+| `contextKey` | String | The scope: `_ROOT_` or `columnName`. |
+| `sourceLocation` | String | 'LOCAL' or URI of the external database owner. |
+| `validFrom` / `validTo` | BigInt | Temporal headers for the link. |
+| `systemVersion` | Integer | Lineage counter. |
+| `createdBy` | UUID | Audit trail. |
+
+### 3.1 Universal Mapping Contexts (`MappingContext`)
+This is NOT a physical database table; these are strict API-level Enums (constants) that the Notary Engine uses to evaluate and enforce the mappingContext string column.
+
+| MappingContext | Category | Parent (Source) | Child (Target) | Logic Trigger |
+| :--- | :--- | :--- | :--- | :--- |
+| **`core_parent`** | Management | Higher Level ID | Lower Level ID | Enforces 9-Level Rules. |
+| **`core_member`** | Management | Group/Collection | Member Item | Roll-up Reporting. |
+| **`core_identity`** | Management | `hierarchyNodeId` | `matterId` | Binds a Hierarchy level to its Matter content. |
+| **`state_current`** | States | `stateId` | `recordId` | `StateTransitionRules`. |
+| **`state_gate`** | States | `blockingId` | `targetId` | Recursive Validation. |
+| **`state_wait`** | States | `predecessorId` | `successorId` | UI/Agent Scheduling. |
+| **`gov_assign`** | Governance | `userId` | `roleId` | Authority Activation. |
+| **`gov_scope`** | Governance | `roleId/userId` | `targetId` | Permission Inheritance. |
+| **`gov_restrict`** | Governance | `restrictionId` | `targetId` | Field Masking. |
+| **`gov_rule`** | Governance | `ruleId` | `targetId` | Transition Enforcement. |
+| **`gov_instruct`** | Governance | `instructionId` | `targetId` | Links work to a formal Change/Instruction. |
+| **`line_branch`** | Branch | `originatingId` | `branchId` | Divergent Tracking. |
+| **`line_merge`** | Branch | `branchId` | `goldenId` | Conflict/Merge Logic. |
+| **`ref_lookup`** | Lookups | `staticRefId` | `recordId` | Static Validation. |
+| **`fed_pointer`** | Federation | `remoteUri` | `localId` | Real-Time Fetch/Proxy. |
+| **`sched_planned`** | Ref/Sched | `recordId` | `scheduleId` | Baseline timeline. |
+| **`sched_agreed`** | Ref/Sched | `recordId` | `scheduleId` | Contracted timeline. |
+| **`sched_actual`** | Ref/Sched | `recordId` | `scheduleId` | Execution actuals. |
+| **`sched_forecast`** | Ref/Sched | `recordId` | `scheduleId` | AI/Human prediction. |
+| **`effort_planned`** | Ref/Effort | `recordId` | `quantityId` | Estimated production. |
+| **`effort_actual`** | Ref/Effort | `recordId` | `quantityId` | Real-world production. |
+| **`com_link`** | Commercial | `matterId` | `commercialId` | Binds financial record. Type defined in contextKey (AFP, INVOICE, etc.). |
+| **`impact_estimated`** | Impact | `matterId` | `quantityId` | `FINANCIAL`, `SCHEDULE`, `CARBON`, `QUALITY`, `SOCIAL` |
+| **`impact_actual`** | Impact | `matterId` | `quantityId` | `FINANCIAL`, `SCHEDULE`, `CARBON`, `QUALITY`, `SOCIAL` |
+
+### 3.2 Federated Single-Truth Protocol & Data Sovereignty
+
+**The Federated Link Rule**
+- **No Duplication:** External records are NEVER copied locally.
+- **MAP Pointers:** External entities use the `fed_pointer` context in the MAP table.
+- **SourceLocation:** Must contain the authoritative URI of the external owner.
+
+**Real-Time Fetch & Proxy**
+- **Live Truth:** Proxies must fetch current versions of `fed_pointer` records in real-time.
+- **Shadow Caching:** Local storage for performance must be marked `FED_SHADOW` with an expiry.
+
+---
+
+## 4. StateResponse (The Decision & Evidence Log)
+
+This table is the "Why" behind a status change. It links a specific decision to a lifecycle transition.
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `stateResponseId` | UUID/PK | Unique identifier for the decision. |
+| `linkToMappingId` | UUID | Pointer to the NEW `state_current` row in the MAP. |
+| `linkToRuleId` | UUID | The specific `StateTransitionRule` satisfied. |
+| `decision` | String | e.g., "Approved", "Rejected", "Queried", "Issued". |
+| `commentText` | Text | Human/Agent justification for the move. |
+| `linkToRoleId` | UUID | The persona/role used to authorize this move. |
+| `createdDateTime` | BigInt | Audit timestamp (Unix MS UTC). |
+| `certifiedBy` | UUID | The `userId` of the actor. |
+
+---
+
+## 5. StateTransitionRules (The Gatekeeper)
+
+Defines "Legal Moves." Checked by the API before a new `state_current` is birthed in the MAP.
+
+| Column | Type | Description |
+| :--- | :--- | :--- |
+| `ruleId` | UUID/PK | Unique rule identifier. |
+| `fromState` | String | The "Starting" status string (e.g., "DRAFT"). |
+| `toState` | String | The "Destination" status string (e.g., "APPROVED"). |
+| `minRoleLevel` | Integer | Minimum authority rank required. |
+| `logicExpression` | String | Optional code (e.g., `totalValue > 1000`) for gates. |
+| `rulePriority` | Integer | Evaluated precedence. |
+| `validFrom` / `validTo` | BigInt | Temporal headers for rule versioning. |
+
+---
+
+## 6. Branching & Conflict Resolution
+
+**Conflict Detection**
+- **Compare:** API compares incoming `systemVersion` against active DB row.
+- **Identify:** API extracts "Dirty Fields" from the incoming payload.
+
+**Resolution Pathways**
+
+| Scenario | Action | Mapping Context |
+| :--- | :--- | :--- |
+| **No Overlap** | **Auto-Merge:** API merges changes and births a new version. | `core_parent` |
+| **Field Overlap** | **Soft Branch:** API saves work as a divergent thread. | `line_branch` |
+| **Manual Choice** | **Conflict Resolution:** UI displays Diff for manual merge. | `line_merge` |
+
+---
+
+## b. View (not tables)
+
+### 1. The 9-Level Management Hierarchy
+
+All data anchors back to the core management hierarchy, which exists purely as contextual relationships mapped between Universal Matter Nodes:
+
+| Level | Entity | Description | Example / Context |
+| :--- | :--- | :--- | :--- |
+| **1** | **Organisation** | The absolute root entity. | vrvish |
+| **2** | **Client** | Legal Entities and paying customers. | WCC, WSP Ltd |
+| **3** | **Portfolio** | Themes or Commander-led groupings of work. | Digital Transformation |
+| **4** | **Programme** | Service areas and collective governance. Our platforms| Place, Helm |
+| **5** | **Project** | Goal-oriented collections of products. | Asset Management Portal |
+| **6** | **Task Order** | Major technology stacks or work streams. | Mobile Inspection App |
+| **7** | **Work Package** | The 6-Folder execution blueprint for delivery. | Phase 1 Deployment |
+| **8** | **Activity** | Granular tasks assigned to persons or agents. | Security Patch |
+| **9** | **Effort** | Atomic tracking of work performed. | Qty + UoM + Quality Ref |
+
+### 2. Business Items
+
+Each of the items below is simply a specific view of the Universal Matter Node (alongside mapping context and satellite connections):
+
+#### 2.1 Early Warning Notices (EWN)
+* **The Notice:** `Matter` (`categoryTag` = "EWN", Title, Description of the issue).
+* **The Impact (EWQ):** Links to `Quantity` via `impact_estimated` (Financial cost, Schedule delay).
+* **Meetings & Outcomes:** Handled via `StateResponse` (Logging when Risk Reduction Meetings happen and the agreed outcomes).
+* **People:** Links via `gov_assign` to show who submitted it and who the Client Responder is.
+
+#### 2.2 Change Events (CE / CEN / CEQ)
+* **The Notice (CEN):** `Matter` (`categoryTag` = "CHANGE_EVENT", Summary of the change).
+* **The Quotation (CEQ):** Links to `Quantity`. 
+    * *Submitted* values are mapped as `impact_estimated`. 
+    * *Agreed* values are mapped as `impact_actual` (replaces legacy fields like `SubmittedChangeToFee` vs `AgreedChangeToFee`).
+* **Approval Flow:** Handled by `StateTransitionRules` routing the CE from Draft -> Submitted -> Client Approved.
+
+#### 2.3 Risks & Opportunities
+* **The Risk Profile:** `Matter` (`categoryTag` = "RISK", Title, Description). `priorityRank` is used for Probability/Severity.
+* **Pre/Post Mitigation:** Links to `Quantity` to quantify the financial/schedule exposure.
+* **Ownership:** Linked to a `UserAccount` via the MAP context `gov_assign` (Role: Risk Owner).
+* **Status:** `Quality` handles the RAG status of the mitigation plan.
+
+#### 2.4 Aims & Objectives (Commitments)
+* **The Commitment:** `Matter` (`categoryTag` = "OBJECTIVE", Title, Strategic Theme).
+* **The Target:** Linked to `Quantity` (e.g., 500 CO2e Reduction).
+* **Progress Tracking:** Linked to `Quality` to track the current Reporting Period and RAG Status.
+
+#### 2.5 Lessons Learned
+* **The Lesson:** `Matter` (`categoryTag` = "LESSON").
+    * `Summary` = The Root Cause.
+    * `Description` = The Recommendation / Applicability.
+* **Federation:** Link to external systems (like WSP LLL) handled via `fed_pointer` in the MAP.
+
+#### 2.6 Feedback
+* **The Content:** `Matter` (`categoryTag` = "FEEDBACK", Title, Description).
+* **The Metrics:** Ratings or "Likes" are stored as `Quantity` rows (e.g., `qtyValue` = 5, `uom` = "Stars") mapped to the Feedback node.
+* **Responses:** Comments from the team are tracked in `StateResponse`.
+
+#### 2.7 Requirements (Requests for Service / Proposals)
+* **The Scope:** `Matter` (`categoryTag` = "REQUIREMENT"). Captures Methodology, Assumptions, and Scope of Service.
+* **The Dates:** Links to `Schedule` for Preferred Start/End dates and Proposal Due Dates.
+* **Constraints:** Flags for CDM applicability, Carbon Modelling, or Information Governance are handled via static reference links (`ref_lookup`) in the MAP.
+
+#### 2.8 Decisions
+* **The Request:** `Matter` (`categoryTag` = "DECISION").
+* **The Audit Trail:** `StateResponse` captures the exact timestamp, user, and justification for the decision made. 
+
+#### 2.9 Roles & Personas
+* **The Definition:** `Matter` (`categoryTag` = "ROLE"). `title` = Role Name (e.g., "Project Director"), `priorityRank` = Authority Level.
+* **The Assignment:** The MAP table (`gov_assign`) links a `UserAccount` to this Role Matter. The MAP table (`gov_scope`) links this Role Matter to a specific Hierarchy level (e.g., Project).

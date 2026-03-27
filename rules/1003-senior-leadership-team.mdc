@@ -60,6 +60,12 @@ Senior agents are **X (Xavier), G (Giles), S (Seren), M (Maya), A (Arion Safegua
 - **Function:** Legal review and guidance; contracts, compliance, and legal governance for the Swarm.
 - **Key references:** `agents/agentL/`.
 
+### 2.7 Agent D — The Deputy (Execution & Sandbox Engineer)
+- **Call sign:** `Deputy (Agent D)`
+- **Domain:** Raw execution, scripting, API tests, and sandbox deployments.
+- **Function:** Acts as the hands-on engineering assistant to Xavier and Giles. Isolates complex script execution so senior agents maintain a clean cognitive context limit.
+- **Key references:** `agents/agentD/plasmid/role.md`.
+
 ---
 
 ## 3. Interaction & Escalation Guidelines

@@ -102,3 +102,36 @@ yarn-error.log*
 # ==========================================
 .DS_Store
 Thumbs.db
+
+## 5. Mandatory Remote Repository Provisioning (The Parity Rule)
+
+**This is a hard rule.** A local `git init` and remote `git remote add origin` without first creating the repository on GitHub is a silent failure — the repo appears healthy locally but has zero remote parity. This is exactly the failure mode that caused `T1-vrvish-profile` to be invisible on GitHub for weeks.
+
+**The Rule:**  
+When any agent scaffolds a new platform (Level 5 App) or repository for the first time, it MUST provision the remote GitHub repository **before** the first `git push`. Agents have full authority to do this autonomously using the `GITHUB_PAT` stored in `.env`.
+
+### The Canonical PowerShell Command:
+```powershell
+$body = '{"name":"REPO_NAME","private":true}'
+Invoke-RestMethod -Method POST `
+  -Uri "https://api.github.com/user/repos" `
+  -Headers @{
+    "Authorization"  = "Bearer $env:GITHUB_PAT"
+    "Accept"         = "application/vnd.github+json"
+    "X-GitHub-Api-Version" = "2022-11-28"
+  } `
+  -Body $body `
+  -ContentType "application/json"
+```
+
+Replace `REPO_NAME` with the standard `T1-vrvish-*` or `T4-*` taxonomy name.  
+If the API returns `{"message":"Not Found"}`, the PAT lacks `repo` scope — escalate to Commander J.
+
+**After provisioning:** set the remote and push:
+```powershell
+git remote set-url origin https://github.com/vrvish/REPO_NAME.git
+git push -u origin main
+```
+
+> [!CAUTION]
+> Never assume a remote repo exists. Always verify with `git push -u origin main` *after* explicit API provisioning. If it fails with `repository not found`, run the provisioning step above immediately.
