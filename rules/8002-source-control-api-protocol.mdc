@@ -105,33 +105,24 @@ Thumbs.db
 
 ## 5. Mandatory Remote Repository Provisioning (The Parity Rule)
 
-**This is a hard rule.** A local `git init` and remote `git remote add origin` without first creating the repository on GitHub is a silent failure — the repo appears healthy locally but has zero remote parity. This is exactly the failure mode that caused `T1-vrvish-profile` to be invisible on GitHub for weeks.
+**This is a hard rule.** A local `git init` without first creating the repository on GitHub produces zero remote parity — the repo appears healthy locally but is invisible on GitHub. This is exactly the failure mode that caused `T1-vrvish-profile` to be missing for weeks.
 
 **The Rule:**  
-When any agent scaffolds a new platform (Level 5 App) or repository for the first time, it MUST provision the remote GitHub repository **before** the first `git push`. Agents have full authority to do this autonomously using the `GITHUB_PAT` stored in `.env`.
+When any agent scaffolds a new platform or repository for the first time, it MUST provision the remote GitHub repository via **`Engine_Git_SourceControl.js`** before the first push. Do NOT use raw `git` CLI commands or raw PowerShell `curl` for this — use the engine.
 
-### The Canonical PowerShell Command:
-```powershell
-$body = '{"name":"REPO_NAME","private":true}'
-Invoke-RestMethod -Method POST `
-  -Uri "https://api.github.com/user/repos" `
-  -Headers @{
-    "Authorization"  = "Bearer $env:GITHUB_PAT"
-    "Accept"         = "application/vnd.github+json"
-    "X-GitHub-Api-Version" = "2022-11-28"
-  } `
-  -Body $body `
-  -ContentType "application/json"
+### Canonical Usage:
+```js
+const Engine_Git_SourceControl = require('C:/GitHub/T1-vrvish-core/scripts/T0-Core/engines/Engine_Git_SourceControl');
+const engine = new Engine_Git_SourceControl('C:/GitHub/MY-REPO-NAME');
+
+// 1. Provision the remote repo on GitHub (uses GITHUB_PAT from .env)
+await engine.createRemoteRepo('MY-REPO-NAME', { private: true });
+
+// 2. Sync all local changes up
+await engine.sync('feat(init): initial scaffold');
 ```
 
-Replace `REPO_NAME` with the standard `T1-vrvish-*` or `T4-*` taxonomy name.  
-If the API returns `{"message":"Not Found"}`, the PAT lacks `repo` scope — escalate to Commander J.
-
-**After provisioning:** set the remote and push:
-```powershell
-git remote set-url origin https://github.com/vrvish/REPO_NAME.git
-git push -u origin main
-```
+`createRemoteRepo()` calls the GitHub REST API (`POST /user/repos`) internally, stores the PAT from `.env`, and sets the remote origin automatically.
 
 > [!CAUTION]
-> Never assume a remote repo exists. Always verify with `git push -u origin main` *after* explicit API provisioning. If it fails with `repository not found`, run the provisioning step above immediately.
+> Never assume a remote repo exists just because a `git remote -v` shows an origin URL. Always call `createRemoteRepo()` on first scaffold.
