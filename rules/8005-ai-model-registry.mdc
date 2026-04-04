@@ -20,13 +20,13 @@ The `.env` contains a pool of personal keys (e.g., `_PERSONAL_1` through `_PERSO
     2. Use the next key if the current one returns a `429 (Quota Exhausted)` error.
     3. **Business Fallback:** Use `GEMINI_API_KEY_BUSINESS` ONLY after all personal keys in the pool have been exhausted.
 
-## 3. Current Model Registry (Active 2026-03-15)
-Use these exact strings. Use `-latest` aliases where available to avoid deprecation.
+## 3. Current Model Registry (Seren / Generative Language API)
+Use **stable REST model ids** returned by `models.list` with `generateContent` support. Google removes older ids (e.g. `gemini-1.5-pro-latest`) from `generateContent` while `listModels` may still succeed — probes can show 200 even when chat 404s on a retired name.
 
 | Tier | Google (Primary) | Anthropic (Parallel) |
 | :--- | :--- | :--- |
-| **Tier 2 (Dexterity)** | `gemini-1.5-flash-latest` | `claude-3-haiku-20240307` |
-| **Tier 3 (Reasoning)** | `gemini-1.5-pro-latest` | `claude-3-5-sonnet-20241022` |
-| **Tier 4 (Heavy Lift)** | `gemini-ultra` | `claude-3-opus-20240229` |
+| **Tier 2 (Dexterity)** | `gemini-2.5-flash` | `claude-3-haiku-20240307` |
+| **Tier 3 (Reasoning)** | `gemini-2.5-pro` | `claude-3-5-sonnet-20241022` |
+| **Tier 4 (Heavy Lift)** | *(see ai.google.dev models guide)* | `claude-3-opus-20240229` |
 
-**Latest Update:** 2026-03-15
+**Latest Update:** 2026-04-01
