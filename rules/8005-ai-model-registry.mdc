@@ -7,26 +7,24 @@ alwaysApply: true
 # 🤖 8005: AI Model Registry & Rotation (L8)
 
 ## 1. Key Vault Location
-All AI keys are centralised at:
+All AI keys for cloud providers are centralised at:
 `C:\GitHub\T1-vrvish-core\theHive\.env`
 
-**Mandate:** Apps and agents MUST read upward to this central vault. Never create local `.env` files for AI keys.
+**Mandate:** Apps and agents MUST read upward to this central vault for cloud API keys.
 
-## 2. Key Discovery & Rotation Logic
-The `.env` contains a pool of personal keys (e.g., `_PERSONAL_1` through `_PERSONAL_19`) and a business fallback.
+## 2. Technical Source of Truth
+The definitive, machine-readable registry of available AI models and their tiers is the `MODEL_CONFIG` dictionary within the master provider engine:
+- **Engine Path:** `C:\GitHub\T1-vrvish-core\scripts\T0-Core\engines\Engine_ModelProvider.py`
 
-- **Discovery:** Agents must parse the `.env` for the pattern `GEMINI_API_KEY_PERSONAL_[N]`.
-- **Rotation Order:** 1. Iterate through all **Personal Keys** (1, 2, 3...) sequentially.
-    2. Use the next key if the current one returns a `429 (Quota Exhausted)` error.
-    3. **Business Fallback:** Use `GEMINI_API_KEY_BUSINESS` ONLY after all personal keys in the pool have been exhausted.
+The `Agent_Launcher.py` uses this configuration as its single source of truth to provision models for the swarm.
 
-## 3. Current Model Registry (Seren / Generative Language API)
-Use **stable REST model ids** returned by `models.list` with `generateContent` support. Google removes older ids (e.g. `gemini-1.5-pro-latest`) from `generateContent` while `listModels` may still succeed — probes can show 200 even when chat 404s on a retired name.
+## 3. Strategic Model Tiers (Human Readable)
+This document provides the human-readable overview of our primary model tiers, which should remain synchronized with the engine's configuration.
 
-| Tier | Google (Primary) | Anthropic (Parallel) |
-| :--- | :--- | :--- |
-| **Tier 2 (Dexterity)** | `gemini-2.5-flash` | `claude-3-haiku-20240307` |
-| **Tier 3 (Reasoning)** | `gemini-2.5-pro` | `claude-3-5-sonnet-20241022` |
-| **Tier 4 (Heavy Lift)** | *(see ai.google.dev models guide)* | `claude-3-opus-20240229` |
+| Tier Name (in Engine) | Provider | Model | Primary Use Case |
+| :--- | :--- | :--- | :--- |
+| **`reasoning`** | Google Gemini | `gemini-1.5-pro` | High-level strategic planning, complex reasoning, architectural design. (Uses Vertex AI Caching). |
+| **`polymath_local`** | Local Lemonade | The latest Gemma 4 E4B (currently `gemma-4-E4B-it-GGUF` Q8) | Fast, multi-modal local tasks where deep reasoning is not required. |
+| **`architect_local`**| Local Lemonade | `gemma-4-26b-a4b-it-gguf` | Specialised deep-logic tasks, major refactoring, and heavy orchestration that do not require cloud internet access. |
 
-**Latest Update:** 2026-04-01
+**Latest Update:** 2026-04-04

@@ -29,10 +29,10 @@ Senior agents are **X (Xavier), G (Giles), S (Seren), M (Maya), A (Arion Safegua
 - **Function:** Primary strategic agent in Antigravity; reads and applies project rules; supports Commanders and Giles.
 - **Key references:** `00-xavier-bootstrap.mdc`, `agents/agentX/`.
 
-### 2.2 Agent G — Giles (Governance / The Brain)
+### 2.2 Agent G — Giles (Governance / The Brain / Giles_NPU_ai)
 - **Call sign:** `Agent G (Governance)`
-- **Domain:** Governance, Pulse Queue orchestration, Work Package triage, QA, and model tier selection.
-- **Function:** Dispatcher and auditor for Work Packages; stage-gate reviewer; may sign off work when Commanders are unavailable (with retrospective notification).
+- **Domain:** Governance, Pulse Queue orchestration, Work Package triage, QA, and A/B test tracking.
+- **Function:** Operates as an *always-awake* NPU entity (`Giles_NPU_ai`, running the latest Gemma 4 E4B, currently `gemma-4-E4B-it-GGUF`), maintaining a persistent background task list (checking emails, reviewing split tasks on `jonsHouse`, executing audits) managed via the `.chiron` namespace. Dispatcher and stage-gate reviewer. He executes **Self-Escalation** to higher-tier cloud models if his local reasoning is insufficient.
 - **Key references:** `agents/agentG/plasmid/role.md`, **[1004-biological-swarm-architecture](mdc:1004-biological-swarm-architecture.mdc)**, **[1013-The Synaptic Queue](mdc:1013-The Synaptic Queue.mdc)**.
 
 ### 2.3 Agent S — Seren (Company Secretary, PA & General Office Manager)

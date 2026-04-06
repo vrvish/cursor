@@ -10,25 +10,34 @@ This framework ensures autonomy and resilience by distributing responsibility ac
 
 ## 1. The Three Tiers
 
-### Tier 1: The Brain (Agent G — The Governor - Giles)
+### Tier 1: The Brain (Giles_NPU_ai)
 - **Role:** The cognitive execution core.
-- **Function:** Interprets the signals within the CNS, evaluates cognitive thresholds, and routes physical Work Packages.
+- **Function:** Operates as an *always-awake* NPU entity rather than a static script. Giles continually processes a background task list (checking emails, tracking A/B testing, initiating audits). He intercepts signals from the CNS, triages them locally, and delegates to the appropriate worker agents or cloud models.
+- **Self-Escalation (The Cognitive Leap):** If Giles's local NPU model cannot confidently determine the routing or understand a complex task, he *must* self-escalate the decision to a higher-tier cloud model (e.g., Gemini Pro) to ensure system safety and accuracy.
 - **Constraint:** Does NOT execute raw scripts directly; it delegates to worker agents to maintain cognitive distance.
 
 ### Tier 2: The Central Nervous System (Infrastructure & Synaptic Queue)
-- **Role:** The data highway and health monitor.
-- **Process:** Runs natively via PM2. 
-- **The Synaptic Queue (`synapse.json`):** This is the chemical messaging path of the CNS. It represents the flow of directives between the Commander and The Brain.
-- **Function:** - Transports Work Packages (Level 7) to the Governor.
-    - Monitors the swarm for crashes, memory leaks, or "nerve" failures.
-    - **Wake-up Protocol:** Autonomously wakes or advises Agent G when new signals enter the queue or when a system anomaly is detected.
+- **Role:** The data highway, physical bridges, and health monitor.
+- **The Sentinel:** A lightweight JS wrapper running on PM2 that ensures the local NPU (e.g., Lemonade on Port 8000) and the API Bridge (Port 4000) are alive. The Sentinel physically passes new data into Giles_NPU_ai's context window.
+- **The Synaptic Queue (`synapse.json`):** The chemical messaging path of the CNS. It represents the flow of directives between the Commander and The Brain.
+- **Function:** 
+  - Transports Work Packages (Level 7) to the Governor.
+  - Monitors the swarm for crashes, memory leaks, or "nerve" failures.
 
 ### Tier 3: The Immune System (Agent A — Arion Safeguard)
 - **Role:** External perimeter defense.
 - **Function:** Monitors ingress webhooks, blocks prompt injections, audits connected accounts for suspicious patterns, and prevents destructive pipeline commits or CVE vulnerabilities.
 
-## 2. Operational Mandate
+## 2. The Chiron Namespace Architecture (`.chiron`)
+The entire intelligence of the Swarm (Rules, Skills, Agents) is unified under a single structural namespace to prevent cognitive bloat and ensure parity between Cursor, the Swarm, and Cloud Caching.
+
+- **`.chiron/rules/`**: The master DNA. Passive, always-on guardrails (e.g., `.mdc` files).
+- **`.chiron/skills/primary/`**: Active Vrvish-specific runbooks. Highly curated, step-by-step instructions for executing proprietary logic (e.g., interacting with the Git Engine, building the 6-Folder Paradigm).
+- **`.chiron/skills/library/`**: The Secondary Layer. Dormant, searchable reference material (e.g., AWS templates, obscure API standards). These are NOT injected into every context to save tokens, but remain available via RAG or semantic search when required.
+- **`.chiron/agents/`**: Definitions and state files for the senior leadership team (including Giles's background backlog).
+
+## 3. Operational Mandate
 - **Strict Separation:** The CNS (`synapse.json`) is strictly for routing structured Work Packages—never for raw commands or unstructured chat.
 - **Immunity:** No agent may bypass Tier 3's audit logs when interacting with external APIs or the internet.
 
-**Latest Update:** 2026-03-15
+**Latest Update:** 2026-04-05

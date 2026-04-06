@@ -1,0 +1,41 @@
+---
+description: The master map defining the .chiron namespace. Integrates the On-Chip AI (Chiron), Cursor, and the Vrvish Swarm under a single, unified architectural namespace.
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# 🧠 1018: Chiron Cognitive Architecture (.chiron)
+
+This rule establishes `.chiron` as the **Single Source of Truth** for the cognitive identity, rules, and skills of the entire Vrvish ecosystem. It prevents the 1,300+ file bloat seen in legacy "agentic" repos and ensures our On-Chip AI and Cloud Models share the exact same DNA.
+
+## 1. The Directory Structure
+
+### A. `.chiron/rules/` (The DNA)
+- **Content:** The `1000`-series `.mdc` files.
+- **Function:** Passive, always-on guardrails that dictate *how* agents must behave (e.g., 6-Folder Paradigm, British English, State Management).
+- **Injection:** Fully injected into context budgets (via `Engine_Chiron_Distributor` and Vertex Caching).
+
+### B. `.chiron/skills/primary/` (Active Runbooks)
+- **Content:** Step-by-step instructions for executing proprietary logic. 
+- **Function:** Highly curated. Teaches the AI *how* to use Vrvish-specific engines (e.g., `Engine_Git_SourceControl`, `ag_bypass` payload formatting, linking Postgres FDW).
+- **Injection:** Injected into relevant tasks or loaded explicitly by agents when dealing with proprietary infrastructure.
+
+### C. `.chiron/skills/library/` (The Secondary Layer)
+- **Content:** The "Mined" Antigravity knowledge base (e.g., AWS CloudFormation templates, obscure API standards, Rust nuances).
+- **Function:** Dormant, reference material to prevent context bloat. 
+- **Injection:** **NEVER** automatically injected. These are kept out of sight to protect the rules budget. Agents must explicitly search or RAG this folder when they encounter an unknown technology.
+
+### D. `.chiron/agents/` (The Personalities & State)
+- **Content:** Master definitions for the Senior Leadership Team (Xavier, Giles, Seren, etc.).
+- **State Storage:** Contains the persistent background task lists for always-awake agents. For example, Giles' to-do list (`todo.md` or `todo.json`) lives here and is directly editable by the Commander via the CommandHub UI.
+
+## 2. The Distributor Engine
+To prevent desyncs between Cursor, the background PM2 daemons, and Google Vertex AI, the `.chiron` folder is distributed outward by the **Chiron Distributor Engine**.
+
+## 3. Naming Convention
+Files inside the `.chiron` namespace must follow strict uniqueness.
+- **Rules:** `1xxx-tier-name.mdc`
+- **Primary Skills:** `vrvish-skill-name.md`
+- **Library Skills:** `ref-topic-name.md`
+
+**Latest Update:** 2026-04-05
