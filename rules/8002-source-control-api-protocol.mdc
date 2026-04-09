@@ -40,7 +40,11 @@ The Swarm MUST never inject `.gitignore` files nested deeply inside transient fo
 - Stack-specific ignores must be **path-scoped** so legitimate source is never excluded by accident:
   - **SharePoint Framework:** all SPFx project roots live under a directory segment named `SPFx`. Ignore only SPFx build output via `**/SPFx/lib/`, `**/SPFx/temp/`, `**/SPFx/release/` (do not use repo-wide `/lib/`; do not add parallel `**/RSA_SPFx/**/lib/` when the build output already lives under `.../SPFx/...`).
   - **Power BI custom visuals (pbiviz):** host each visual project under a directory segment named `pbiviz`. Ignore only `**/pbiviz/.tmp/`, `**/pbiviz/package/`, and `**/pbiviz/**/*.pbiviz` (do not use repo-wide `/.tmp/` or `/package/` for pbiviz).
+  - **Local AI / model weights:** host downloadable weights, Hugging Face caches, and similar artefacts under a directory segment named `ai_models` (same idea as `SPFx` / `pbiviz`). Ignore `**/ai_models/` in Git. Also ignore `**/.cache/huggingface/` and `**/temp/.cache/` so transient caches never enter the index. **Large binaries** that are not source code belong under `C:\vrvish\gitOverflow\...` per **[1012](mdc:1012-swarm-habitat-map.mdc)** (mirroring `largeAssets/`), not in `C:\GitHub\`.
 - Use **unanchored** patterns at repo root for artefacts that must never appear anywhere in the tree (e.g. `node_modules/`, `.next/`, `.env`), not leading-`/` copies pasted per subfolder.
+
+### Push access (forks and `origin`)
+If a clone’s `origin` points at **another user’s** GitHub repository (e.g. `github.com/sickn33/...`) but Git Credential Manager is logged in as **`vrvish`**, `git push` will return **403**. Either create a **fork** (or new repo) under `github.com/vrvish/...`, run `git remote set-url origin <that-url>`, and push there, or push using credentials that have **write** access to the upstream repository.
 
 ### Canonical .gitignore Template (repository root)
 ```gitignore
@@ -78,10 +82,15 @@ pnpm-debug.log*
 **/SPFx/release/
 *.sppkg
 
-# Power BI custom visuals — only under pbiviz project roots
+# Power BI custom visuals - only under pbiviz project roots
 **/pbiviz/.tmp/
 **/pbiviz/package/
 **/pbiviz/**/*.pbiviz
+
+# Local AI / large model downloads (never commit; prefer C:\vrvish\gitOverflow per 1012)
+**/ai_models/
+**/.cache/huggingface/
+**/temp/.cache/
 
 # Python
 __pycache__/
@@ -96,7 +105,7 @@ Olive_House_Venv/
 Thumbs.db
 ```
 
-Add repository-specific lines only at the root when required (e.g. `theHive/.env` in `T1-vrvish-core`, Prisma `generated/` in a named app). Do not reintroduce nested `.gitignore` files for the same rules.
+Add repository-specific lines only at the root when required (e.g. `theHive/.env` ignore entries **only** in `T1-vrvish-core` where that file lives; **do not** add `theHive/.env` to `T1-vrvish-profile`—the profile gateway loads `C:\GitHub\T1-vrvish-core\theHive\.env` in code). Prisma `generated/` in a named app is another valid exception. Do not reintroduce nested `.gitignore` files for the same rules.
 
 ## 5. Mandatory Remote Repository Provisioning (The Parity Rule)
 

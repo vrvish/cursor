@@ -40,6 +40,11 @@ pnpm-debug.log*
 **/pbiviz/package/
 **/pbiviz/**/*.pbiviz
 
+# Local AI / large model downloads (never commit; prefer C:\vrvish\gitOverflow per 1012)
+**/ai_models/
+**/.cache/huggingface/
+**/temp/.cache/
+
 # Python
 __pycache__/
 *.py[cod]
