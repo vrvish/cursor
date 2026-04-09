@@ -1,0 +1,49 @@
+---
+description: Defines the Hybrid Application Deployment strategy (Web/PWA vs Native/Tauri Portable App) for Vrvish platforms.
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# 🖥️ Hybrid Deployment Architecture (PWA vs Native Portable)
+
+This rule defines the deployment strategy for Vrvish platforms, specifically addressing the balance between strict Enterprise IT policies and the requirement for heavy Local AI (RAG) execution via Chiron.
+
+---
+
+## 1. The Single Codebase Philosophy
+All Vrvish user interfaces are built **once** using Web Technologies (React, Next.js, Vite). 
+There are no separate UI codebases for web, desktop, and mobile. Instead, the deployment environment acts as a "shell" that dictates the capabilities of the application.
+
+---
+
+## 2. Tier 1: The "Lite" Web App (Browser Sandbox)
+
+The baseline deployment for any platform is a standard Web Application accessed via a browser (Chrome/Edge) or installed as a PWA (Progressive Web App).
+
+### Capabilities & Limitations
+- **Access:** Universal. Can bypass virtually all IT restrictions simply by navigating to the URL.
+- **Data Storage:** Uses `PGLite` (WASM Postgres) restricted to browser `IndexedDB` quotas. Receives updates from Arion in the background.
+- **AI Processing:** Uses lightweight local AI (e.g., `Whisper.cpp` WASM for voice). **CANNOT** run massive local LLMs due to VRAM limits.
+- **RAG Routing:** Heavy project tracking and generative AI tasks are routed safely to the cloud (Arion / Vertex / Azure).
+- **Filesystem Access:** Strictly sandboxed. Users must manually upload documents to interact with them.
+
+---
+
+## 3. Tier 2: The "Pro" Portable App (Native Wrapper)
+
+To provide the ultimate "Zero-Latency Local RAG" experience while avoiding Enterprise admin restrictions, platforms are deployed as a Portable Executable (`.exe`) wrapping the web UI via Tauri, WebView2, or C#.
+
+### Capabilities & Advantages
+- **Deployment:** Distributed as a zip with a Per-User Installer and an EV (Extended Validation) Certificate. It sits in `%LocalAppData%` or runs directly from a folder—**No Administrator Privileges Required.**
+- **The "Native Bridge":** The Native shell injects a global JavaScript object (e.g., `window.__VRVISH_NATIVE__`). The React UI detects this and transforms into "Pro" mode.
+- **Local AI (Chiron):** The native wrapper bundles and runs native NPU inferencing (`llama.cpp` or DirectML ONNX). The React UI calls `localhost` instead of the cloud, enabling massive document RAG at zero cloud cost.
+- **Unrestricted Filesystem:** The wrapper can index the user's `C:\Projects` folder in the background automatically, allowing Chiron to perform RAG on gigabytes of local PDFs without the user ever clicking "Upload."
+- **Customization:** Users can drop a `settings.json` into the portable directory. The wrapper reads it and passes UI overrides directly into the React environment.
+
+---
+
+## 4. The Development Handshake
+
+When building features, agents must design for graceful degradation:
+1. **Always check for the bridge.** `if (window.__VRVISH_NATIVE__) { doNativeAction() } else { doCloudAction() }`.
+2. **Never break the Web Tier.** If the user is on the PWA, gracefully fallback to Arion if Chiron is unavailable.
