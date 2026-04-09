@@ -1,5 +1,5 @@
 ---
-description: Mandatory Source Control Protocol. Governed by the Catastrophic Failure Rule, Git API usage, and the App-Root Barricade. (Level 8: Actions)
+description: Mandatory Source Control Protocol. Governed by the Catastrophic Failure Rule, Git API usage, and the repository-root GitIgnore barricade. (Level 8: Actions)
 globs: ["**/*"]
 alwaysApply: true
 ---
@@ -32,76 +32,71 @@ All active Swarm agents **must** use our dedicated Git Node.js API endpoints or 
 2. **The API Sync Tool**: Agents must construct a structured JSON payload detailing the files changed, the precise commit message (following conventional commits), and POST this payload to the Swarm's internal Git Sync API (Implementation in WP-208).
 3. **The `Stage Gate` Sync**: When Agent G audits a completed Work Package, the final step of the audit script MUST trigger the Git Sync API to cleanly stage, commit, and push the active T1 platform branch to the remote origin.
 
-## 4. The App-Root Barricade Rule (GitIgnore Safety)
+## 4. The Repository-Root Barricade Rule (GitIgnore Safety)
 The Swarm MUST never inject `.gitignore` files nested deeply inside transient folders like `node_modules` or `.next`. Doing so forces Git to traverse massive cache trees and causes catastrophic CPU/RAM overload (Git Overload).
 
 **The Rule:**
-All cache barricades MUST be placed identically at the Application Root level (Level 6) via an anchored `.gitignore`.
-- Explicit absolute anchoring must be used (e.g., `/node_modules/`, `/.next/`, `/dist/`).
-- Only use an overarching ecosystem `*` `.gitignore` if explicitly ordered.
+- Use **exactly one** `.gitignore` at the **git repository root** per repo. Do not scatter duplicate templates under `T6-*`, `theHive`, `scripts`, work packages, or caches.
+- Stack-specific ignores must be **path-scoped** so legitimate source is never excluded by accident:
+  - **SharePoint Framework:** all SPFx project roots live under a directory segment named `SPFx`. Ignore only SPFx build output via `**/SPFx/lib/`, `**/SPFx/temp/`, `**/SPFx/release/` (do not use repo-wide `/lib/`; do not add parallel `**/RSA_SPFx/**/lib/` when the build output already lives under `.../SPFx/...`).
+  - **Power BI custom visuals (pbiviz):** host each visual project under a directory segment named `pbiviz`. Ignore only `**/pbiviz/.tmp/`, `**/pbiviz/package/`, and `**/pbiviz/**/*.pbiviz` (do not use repo-wide `/.tmp/` or `/package/` for pbiviz).
+- Use **unanchored** patterns at repo root for artefacts that must never appear anywhere in the tree (e.g. `node_modules/`, `.next/`, `.env`), not leading-`/` copies pasted per subfolder.
 
-### Canonical .gitignore Template:
+### Canonical .gitignore Template (repository root)
 ```gitignore
-# ==========================================
-# 🛑 CORE DEPENDENCIES (All Frameworks)
-# ==========================================
-/node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Repository root barricade (8002). One file per repo.
+# SPFx: outputs only under .../SPFx/... | pbiviz: projects under .../pbiviz/...
 
-# ==========================================
-# 🛑 NEXT.JS / REACT NATIVE / WEB
-# ==========================================
-/.next/
-/out/
-/build/
-/dist/
+# Secrets
+.env
+.env.*
+!.env.example
+.env.local
+**/.env.local
 
-# ==========================================
-# 🛑 SPFX (SharePoint Framework) & GULP
-# ==========================================
-/temp/
-/lib/
-/release/
-*.sppkg
-
-# ==========================================
-# 🛑 MODERN OFFICE ADD-INS
-# ==========================================
-/.config/
+# Certificates and keys
+*.pfx
+*.p12
+*.pem
 *.cert
 *.key
 
-# ==========================================
-# 🛑 POWER BI (Custom Visuals / pbiviz)
-# ==========================================
-/.tmp/
-/package/
-*.pbiviz
+# Dependencies and build output (any depth)
+node_modules/
+.next/
+out/
+build/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# ==========================================
-# 🛑 PYTHON (Venv / Data Team / Scripts)
-# ==========================================
-/__pycache__/
+# SPFx — only under SPFx project roots
+**/SPFx/lib/
+**/SPFx/temp/
+**/SPFx/release/
+*.sppkg
+
+# Power BI custom visuals — only under pbiviz project roots
+**/pbiviz/.tmp/
+**/pbiviz/package/
+**/pbiviz/**/*.pbiviz
+
+# Python
+__pycache__/
 *.py[cod]
-/.venv/
-/venv/
-/env/
-/Olive_House_Venv/
+.venv/
+venv/
+env/
+Olive_House_Venv/
 
-# ==========================================
-# 🛑 SECRETS & ENVIRONMENT VARIABLES
-# ==========================================
-/.env
-/.env.*
-!.env.example
-
-# ==========================================
-# 🛑 OS GENERATED FILES
-# ==========================================
+# OS
 .DS_Store
 Thumbs.db
+```
+
+Add repository-specific lines only at the root when required (e.g. `theHive/.env` in `T1-vrvish-core`, Prisma `generated/` in a named app). Do not reintroduce nested `.gitignore` files for the same rules.
 
 ## 5. Mandatory Remote Repository Provisioning (The Parity Rule)
 

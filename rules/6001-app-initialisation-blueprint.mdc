@@ -29,6 +29,8 @@ Apps live within Project/Portfolio directories, following the T4/T5/T6 habitat p
 │   └── 📂 archive/         # Historical task records.
 └── 📜 synapse.json         # Real-time state (Version, Health, Active Gate).
 
+**Stack output folders (Git):** Place SharePoint Framework solutions under a directory segment named `SPFx` (build artefacts `lib/`, `temp/`, `release/` are ignored only under `**/SPFx/...` per **[8002](mdc:8002-source-control-api-protocol.mdc)**). Place Power BI custom visual (pbiviz) projects under a directory segment named `pbiviz` (ignore `**/pbiviz/.tmp/`, `**/pbiviz/package/`, packaged `*.pbiviz` only there). The repository uses **one** `.gitignore` at the **git root** for barricades—do not add duplicate `.gitignore` files under each `T6-*`.
+
 ## 3. Promotion Workflow (The Brain Gate)
 1. **Development:** All active coding happens within a specific folder inside `workPackages/active/`.
 2. **Validation:** Once the agent satisfies the "Definition of Done," the state is set to `QA`.
