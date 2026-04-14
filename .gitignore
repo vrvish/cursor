@@ -5,7 +5,7 @@
 # SPFx: outputs only under .../SPFx/... | pbiviz: projects under .../pbiviz/...
 
 # Secrets
-.env
+# .env is allowed — files must be SOPS-encrypted before committing
 .env.*
 !.env.example
 .env.local
