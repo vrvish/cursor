@@ -18,7 +18,7 @@ This framework ensures autonomy and resilience by distributing responsibility ac
 
 ### Tier 2: The Central Nervous System (Infrastructure & Synaptic Queue)
 - **Role:** The data highway, physical bridges, and health monitor.
-- **The Sentinel:** A lightweight JS wrapper running on PM2 that ensures the local NPU (e.g., Lemonade on Port 8000) and the API Bridge (Port 4000) are alive. The Sentinel physically passes new data into Giles_NPU_ai's context window.
+- **The Sentinel:** A lightweight wrapper running on PM2 that ensures the sovereign local stack is alive: **`vrvish-bridge` on port `8000`**, **`seren-librarian` on port `8001`**, and the **Lemonade engine on port `8080`**. The Sentinel physically passes new data into Giles_NPU_ai's context window.
 - **The Synaptic Queue (`synapse.json`):** The chemical messaging path of the CNS. It represents the flow of directives between the Commander and The Brain.
 - **Function:** 
   - Transports Work Packages (Level 7) to the Governor.
@@ -39,5 +39,7 @@ The entire intelligence of the Swarm (Rules, Skills, Agents) is unified under a 
 ## 3. Operational Mandate
 - **Strict Separation:** The CNS (`synapse.json`) is strictly for routing structured Work Packages—never for raw commands or unstructured chat.
 - **Immunity:** No agent may bypass Tier 3's audit logs when interacting with external APIs or the internet.
+- **Sovereign Port Split:** The local swarm stack must preserve the settled port map: **Brain / bridge = `8000`**, **Memory / Seren Librarian = `8001`**, **Muscles / Lemonade runtime = `8080`**.
+- **No Stale Bridge Hints:** Agents must treat any reference to bridge port `4000` as stale legacy material and correct it to `8000` unless explicitly documenting historical state.
 
-**Latest Update:** 2026-04-05
+**Latest Update:** 2026-04-15

@@ -38,4 +38,14 @@ Files inside the `.chiron` namespace must follow strict uniqueness.
 - **Primary Skills:** `vrvish-skill-name.md`
 - **Library Skills:** `ref-topic-name.md`
 
-**Latest Update:** 2026-04-05
+
+## 4. Sovereign Local Port Doctrine
+Where `.chiron` rules discuss the local AI runtime, MCP transport, bridge health, or developer setup, they must enforce the settled sovereign port split:
+
+- **`8000`** — `vrvish-bridge` (the Brain / MCP + OpenAI-compatible bridge)
+- **`8001`** — `seren-librarian` (the Memory / sovereign retrieval service)
+- **`8080`** — `lemonade-router` (the Muscles / local inference engine)
+
+Any `.chiron` rule, skill, hint, or example that still references the bridge on `:4000` must be considered stale and updated to `:8000` unless it is explicitly describing historical behaviour.
+
+**Latest Update:** 2026-04-15
