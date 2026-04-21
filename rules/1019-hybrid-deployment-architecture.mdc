@@ -1,0 +1,46 @@
+---
+description: Defines the Hybrid Application Deployment strategy (Web/PWA vs Native/Tauri Portable App) for Vrvish platforms.
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# 🖥️ Hybrid Deployment Architecture (PWA vs Native Portable)
+
+This rule defines the deployment strategy for Vrvish platforms, specifically addressing the balance between strict Enterprise IT policies and the requirement for heavy Local AI (RAG) execution via Chiron.
+
+---
+
+## 1. The Single Codebase Philosophy
+All Vrvish user interfaces are built **once** using Web Technologies (React, Next.js, Vite). 
+There are no separate UI codebases for web, desktop, and mobile. Instead, the deployment environment acts as a "shell" that dictates the capabilities of the application.
+
+---
+
+## 2. The 4-Tier Cognitive Hierarchy
+
+The "Pro" Native Wrapper (C# WebView2) employs a strict four-tier escalation path to balance extreme intelligence against API token costs and privacy constraints:
+
+### Tier 1 (Cost: Free / Always-On)
+- **Component:** The Ambient Listener & Background Observer (C# / Whisper.net).
+- **Role:** Always listening natively. Handles wake words ("Hey Seren") and system-wide hotkeys with zero network latency. Uses intent routing to decide if a query can be solved locally.
+
+### Tier 2 (Cost: Free / On-Device)
+- **Component:** The Local AI Engine (e.g. Qwen for code, Gemma for chat).
+- **Role:** The first attempt at answering the prompt. Executes autonomously with access to local filesystem MCP capabilities. Fully secure, zero-data-leakage architecture.
+- **Escalation:** If Tier 2 lacks context or capacity, it explicitly emits `<ESCALATE_TO_CLOUD>`.
+
+### Tier 3 (Cost: Handled Internally / Free to Client)
+- **Component:** The Central Vrvish Bridge Proxy (routing to internal open-weight AI).
+- **Role:** If the local device is too weak, the prompt hits our centralized Cloud-hosted Llama/DeepSeek instances. It costs us server operations, but zero external API costs. 
+
+### Tier 4 (Cost: Premium / Pay-per-token)
+- **Component:** Claud AI / Gemini Pro (The Big Guns).
+- **Role:** The highest level of intelligence. Only invoked explicitly for massive data-crunching or highly complex tasks. Eventually, this tier will support BYOK (Bring Your Own Key) where clients plug in their own paid AI subscriptions.
+
+---
+
+## 4. The Development Handshake
+
+When building features, agents must design for graceful degradation:
+1. **Always check for the bridge.** `if (window.__VRVISH_NATIVE__) { doNativeAction() } else { doCloudAction() }`.
+2. **Never break the Web Tier.** If the user is on the PWA, gracefully fallback to Arion if Chiron is unavailable.
