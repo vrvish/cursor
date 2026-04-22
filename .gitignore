@@ -1,58 +1,6 @@
-# Cursor / IDE local overrides
-*.local.*
-
-# Repository root barricade (8002). One file per repo.
-# SPFx: outputs only under .../SPFx/... | pbiviz: projects under .../pbiviz/...
-
-# Secrets
-# .env is allowed — files must be SOPS-encrypted before committing
-.env.*
-!.env.example
-.env.local
-**/.env.local
-
-# Certificates and keys
-*.pfx
-*.p12
-*.pem
-*.cert
-*.key
-
-# Dependencies and build output (any depth)
-node_modules/
-.next/
-out/
-build/
-dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# SPFx - only under SPFx project roots
-**/SPFx/lib/
-**/SPFx/temp/
-**/SPFx/release/
-*.sppkg
-
-# Power BI custom visuals - only under pbiviz project roots
-**/pbiviz/.tmp/
-**/pbiviz/package/
-**/pbiviz/**/*.pbiviz
-
-# Local AI / large model downloads (never commit; prefer C:\vrvish\gitOverflow per 1012)
-**/ai_models/
-**/.cache/huggingface/
-**/temp/.cache/
-
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-env/
-Olive_House_Venv/
-
-# OS
-.DS_Store
 Thumbs.db
+.DS_Store
+*.log
+
+# Machine-specific WebP site root (optional; use User env VRVISH_WEBP_WWWROOT instead if you prefer)
+compressImages/vrvish-webp-wwwroot.txt
