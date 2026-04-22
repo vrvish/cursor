@@ -4,3 +4,8 @@ Thumbs.db
 
 # Machine-specific WebP site root (optional; use User env VRVISH_WEBP_WWWROOT instead if you prefer)
 compressImages/vrvish-webp-wwwroot.txt
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
